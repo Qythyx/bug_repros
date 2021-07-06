@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<views:BaseContentPage
+	x:Class="BeerApp.App.Forms.Views.OffersPage"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:models="clr-namespace:BeerApp.Core.Models;assembly=BeerApp.Core"
+	xmlns:resources="clr-namespace:BeerApp.App.Forms.Resources"
+	xmlns:viewmodels="clr-namespace:BeerApp.Core.ViewModels;assembly=BeerApp.Core"
+	xmlns:views="clr-namespace:BeerApp.App.Forms.Views"
+	Title="{x:Static resources:AppResources.OffersTitle}"
+	x:DataType="viewmodels:OffersViewModel"
+	x:TypeArguments="viewmodels:OffersViewModel">
+	<AbsoluteLayout>
+		<RefreshView
+			x:Name="refreshView"
+			AbsoluteLayout.LayoutBounds="0,0,1,1"
+			AbsoluteLayout.LayoutFlags="All"
+			Command="{Binding Refresh}"
+			IsRefreshing="{Binding IsRefreshing}">
+			<ScrollView VerticalScrollBarVisibility="Never">
+				<CollectionView ItemsSource="{Binding ObsOffers}">
+					<CollectionView.ItemTemplate>
+						<DataTemplate x:DataType="models:Offer">
+							<Label Text="{Binding ID}" />
+						</DataTemplate>
+					</CollectionView.ItemTemplate>
+				</CollectionView>
+			</ScrollView>
+		</RefreshView>
+	</AbsoluteLayout>
+</views:BaseContentPage>

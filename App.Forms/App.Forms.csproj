@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+		<RootNamespace>BeerApp.App.Forms</RootNamespace>
+		<LangVersion>preview</LangVersion>
+		<Nullable>enable</Nullable>
+		<AssemblyName>BeerApp.App.Forms</AssemblyName>
+		<Configurations>Mock;Debug;Release;App Store</Configurations>
+		<ReleaseVersion>1.1.1.1</ReleaseVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mock|AnyCPU' ">
+		<DebugSymbols>true</DebugSymbols>
+		<DefineConstants>TRACE;MOCK</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'App Store|AnyCPU' ">
+		<Optimize>true</Optimize>
+		<DefineConstants>TRACE;APP_STORE</DefineConstants>
+		<NoStdLib>false</NoStdLib>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="AppShell.xaml.cs">
+			<DependentUpon>AppShell.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Themes\Dark.xaml.cs">
+			<DependentUpon>Dark.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Themes\Light.xaml.cs">
+			<DependentUpon>Light.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\ItemsPage.xaml.cs">
+			<DependentUpon>ItemsPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Controls\VerifyingContentView.xaml.cs">
+			<DependentUpon>VerifyingContentView.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Order\SummaryPage.xaml.cs">
+			<DependentUpon>SummaryPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Account\NewCreditCardPage.xaml.cs">
+			<DependentUpon>NewCreditCardPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\AppResources.Designer.cs">
+			<DependentUpon>AppResources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Resources\" />
+		<Folder Include="Views\Order\" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\Roboto-Bold.ttf" />
+		<EmbeddedResource Include="Resources\Roboto-Regular.ttf" />
+		<EmbeddedResource Include="Resources\RobotoCondensed-Regular.ttf" />
+		<EmbeddedResource Include="Resources\RobotoCondensed-Bold.ttf" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Condition=" '$(EnableDefaultEmbeddedResourceItems)' == 'true' " Update="Resources\AppResources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Microsoft.CSharp" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Core\Core.csproj" />
+	</ItemGroup>
+</Project>

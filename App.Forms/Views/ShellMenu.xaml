@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+	x:Class="BeerApp.App.Forms.Views.ShellMenu"
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:BeerApp.App.Forms.Views"
+	xmlns:resources="clr-namespace:BeerApp.App.Forms.Resources"
+	x:Name="This"
+	x:DataType="local:ShellMenu"
+	FlyoutWidth="250">
+
+	<Shell.Resources>
+		<ResourceDictionary>
+			<DataTemplate
+				x:Key="ShellContentItem"
+				x:DataType="ShellContent">
+				<StackLayout
+					Padding="6,10"
+					VerticalOptions="CenterAndExpand">
+					<StackLayout.GestureRecognizers>
+						<TapGestureRecognizer
+							Command="{Binding NavigateTo, Source={x:Reference This}}"
+							CommandParameter="{Binding .}"
+							NumberOfTapsRequired="1" />
+					</StackLayout.GestureRecognizers>
+					<Label
+						HorizontalOptions="FillAndExpand"
+						Text="{Binding Title}"
+						VerticalOptions="Center" />
+				</StackLayout>
+			</DataTemplate>
+			<DataTemplate
+				x:Key="MenuItemDivider"
+				x:DataType="MenuItem">
+				<BoxView
+					Margin="0"
+					HeightRequest="1" />
+			</DataTemplate>
+		</ResourceDictionary>
+	</Shell.Resources>
+
+	<Shell.FlyoutContentTemplate>
+		<DataTemplate>
+			<Grid
+				ColumnDefinitions="*"
+				HorizontalOptions="Start"
+				RowDefinitions="Auto,*"
+				RowSpacing="0">
+				<CollectionView
+					Grid.Row="1"
+					Grid.Column="0"
+					BindingContext="{x:Reference This}"
+					IsGrouped="True"
+					ItemsSource="{Binding FlyoutItems}" />
+			</Grid>
+		</DataTemplate>
+	</Shell.FlyoutContentTemplate>
+
+	<ShellContent
+		x:Name="OffersContent"
+		Title="{x:Static resources:AppResources.OffersTitle}"
+		ContentTemplate="{DataTemplate local:OffersPage}"
+		FlyoutIcon="icon_offers.png"
+		Route="offers" />
+</Shell>

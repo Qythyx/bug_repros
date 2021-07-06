@@ -1,0 +1,642 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<!--
+	General Strings
+	-->
+	<data name="AppName">
+		<value>beerbox</value>
+	</data>
+	<data name="AboutDescription">
+		<value>魅力的なクラフトビールをご自宅までお届け！</value>
+	</data>
+	<data name="Copyright">
+		<value>© 2021 Beer Cats K.K.</value>
+	</data>
+	<data name="TermsAndConditions">
+		<value>特定商取引に関する法律に基づく表示</value>
+	</data>
+	<data name="TermsAndConditionsBody">
+		<value>社名 ビア・キャッツ株式会社
+設立 2013年10月
+TEL: 03-5904-8949
+所在地：〒112-0012 東京都文京区大塚6-10-14 A602
+代表取締役 スティーブンズ・トッド・マイケル
+
+受注
+当アプリケーション内において、「ビア・ボックス」内に商品を追加した時点で、受注締切日に商品の購入に合意したものとみなされます。
+原則として毎月のビア・ボックス〆切日の翌日発送させて頂きます。北海道・青森・岩手・秋田・中国・四国・九州・沖縄・離島は翌々日納品となります。
+
+配送方法
+・ゆうパックまたは佐川急便にて手配致します。（クール便で手配致します。）
+・配送料は1,000円を頂戴しております。（12,000円以上のご注文は弊社が送料を負担致します）
+
+お支払い方法
+・クレジットカード（VISA, MASTER, JCB, AMERICAN EXPRESS, DINERS）
+毎月のビア・ボックス〆切日に自動決算させて頂きます。
+
+消費税について
+消費税率：10％ （税込表記）
+消費税計算順序：1商品毎の消費税計算
+1円未満消費税端数：四捨五入
+
+返品について
+•商品がお手元につきましたら、すぐに注文と違ったものが送られていないか確認して下さい。
+•商品の品質については細心の注意を払っておりますが、万一商品が破損・汚損していた場合、またはご注文と異なる場合は、お届け後一週間以内にご連絡下さい。
+•返品の場合はお手数ですが着払いにて弊社までお送り下さい。
+•品質、商品の状態はすべて弊社が保証いたします。
+
+返送先：
+〒170-0005
+東京都豊島区南大塚3-53-7 5F
+
+飲酒は20歳になってから。飲酒運転は法律で禁止されています。
+妊娠中や授乳期の飲酒は、胎児・乳児の発育に悪影響を与えるおそれがあります。
+
+個人情報の取り扱いについて
+個人情報保護方針
+1. 当社は、お客さまの個人情報の適正な取り扱いに関する法令その他の規範を遵守いたします。
+2. 当社は、お客さまの個人情報を適正に取得いたします。また、法令に定める場合を除き、お客さまの個人情報の利用目的を通知または公表し、利用目的の範囲内において使用いたします。
+3. 当社では、すべての役職員が個人情報保護の重要性を理解し、お客さまの個人情報を適切に取扱うよう教育いたします。
+4. 当社は、お客さまの個人情報に関し、不正アクセス、個人情報の紛失、改ざんおよび漏洩等の防止に努め、適切な安全管理措置を実施いたします。
+5. 当社は法令に定める場合を除き、お客さまの個人情報をあらかじめご本人の同意を得ることなく第三者に提供することはいたしません。
+6. 当社はお客さまの個人情報の取扱いを委託する場合は、お客さまの個人情報の安全管理が図られるよう適切に監督いたします。
+7. 当社では、個人情報保護のための管理体制および取組みを継続的に見直し、その改善につとめてまいります。
+
+個人情報の利用目的について
+お客様の個人情報は、下記の目的についてのみ利用いたします。
+1. メールマガジンなどによる各種情報のご案内
+2. アンケート回答
+3. 商品サービスの充実を図るためのデータ分析
+
+上記以外の目的には利用いたしません。また、収集した情報は本人の同意を得ない限り第三者への開示提供は行いません。ただし裁判所、警察、消費者センターまたはこれらに準じた権限を持った機関から合法的な要請がある場合は、これに応じて情報を開示する場合があります。</value>
+	</data>
+	<data name="TaxIncluded">
+		<value>（税込）</value>
+	</data>
+	<data name="MenuLogout">
+		<value>ログアウト</value>
+	</data>
+	<data name="ButtonCancel">
+		<value>キャンセル</value>
+	</data>
+	<data name="ButtonAccept">
+		<value>OK</value>
+	</data>
+	<data name="Yen">
+		<value>¥</value>
+	</data>
+	<data name="YenBeforeNumber">
+		<value>¥{0:#,0}</value>
+	</data>
+	<data name="NetworkDisconnected">
+		<value>インターネットに接続していません。通信環境をご確認ください。</value>
+	</data>
+	<!-- #######
+	     Account
+	     ####### -->
+	<!--
+	General Account Strings
+	-->
+	<data name="AccountEmailAddress">
+		<value>メールアドレス</value>
+	</data>
+	<data name="AccountName">
+		<value>氏名</value>
+	</data>
+	<data name="AccountShippingAddress">
+		<value>お届け先ご住所</value>
+	</data>
+	<data name="AccountPhoneNumber">
+		<value>電話番号</value>
+	</data>
+	<data name="AccountPhoneNumberTip">
+		<value>お届けの際に運送会社よりご連絡が行くご事があります。</value>
+	</data>
+	<data name="AccountProblemAccessForbiddenTitle">
+		<value>Problem Updating Account</value>
+	</data>
+	<data name="AccountProblemAccessForbidden">
+		<value>Looks like there was a problem updating your account. Please login again.</value>
+	</data>
+	<data name="AccountProblemContactInformationInvalid">
+		<value>電話番号が正しくありません。ご確認ください。</value>
+	</data>
+	<data name="AccountProblemCreditCardInvalid">
+		<value>クレジットカード情報が正しくありません。ご確認ください。</value>
+	</data>
+	<data name="AccountProblemEmailAlreadyExists">
+		<value>そのメールアドレスは既に登録されています。ログインするか、新しいメールアドレスで登録してください。</value>
+	</data>
+	<data name="AccountProblemShippingAddressInvalid">
+		<value>お届け先住所が正しくありません。ご確認ください。</value>
+	</data>
+	<data name="AccountProblemUnknownError">
+		<value>予期せぬ問題が発生しました。もう一度お試しください。</value>
+	</data>
+	<!--
+	Address
+	-->
+	<data name="AddressPostalCode">
+		<value>郵便番号</value>
+	</data>
+	<data name="AddressPrefecture">
+		<value>都道府県</value>
+	</data>
+	<data name="AddressLocal">
+		<value>市区町村・番地以降</value>
+	</data>
+	<data name="CreditCardSameAsShipping">
+		<value>お届け先住所と同じ</value>
+	</data>
+	<!--
+	Create Account
+	-->
+	<data name="CreateAccountTitle">
+		<value>アカウント作成</value>
+	</data>
+	<data name="CreateAccountButtonCreate">
+		<value>登録</value>
+	</data>
+	<data name="CreateAccountAgreeToTerms">
+		<value>同意する</value>
+	</data>
+	<data name="CreateAccountBirthdate">
+		<value>生年月日</value>
+	</data>
+	<data name="CreateAccountBirthdateTip">
+		<value>20歳以未満の方はご利用頂けません</value>
+	</data>
+	<!--
+	Edit Account
+	-->
+	<data name="EditAccountTitle">
+		<value>アカウント</value>
+	</data>
+	<data name="EditContactInfoLink">
+		<value>連絡先</value>
+	</data>
+	<data name="EditShippingAddressLink">
+		<value>お届け先住所</value>
+	</data>
+	<data name="ChangePaymentMethodLink">
+		<value>支払い方法を登録</value>
+	</data>
+	<data name="EditContactInformationTitle">
+		<value>連絡先</value>
+	</data>
+	<data name="EditShippingAddressTitle">
+		<value>お届け先住所</value>
+	</data>
+	<data name="EditPaymentMethodTitle">
+		<value>支払い方法</value>
+	</data>
+	<data name="EditAccountButtonSave">
+		<value>保存</value>
+	</data>
+	<!--
+	Credit Card
+	-->
+	<data name="CreditCardNotStoredOnServer">
+		<value>クレジットカードの情報は弊社のサーバーに保存されません。</value>
+	</data>
+	<data name="CreditCardAllowedCards">
+		<value>Visa, Mastercard, American Express, JCB</value>
+	</data>
+	<data name="CreditCardNameOnCard">
+		<value>クレジットカード名義</value>
+	</data>
+	<data name="CreditCardCardNumber">
+		<value>カード番号</value>
+	</data>
+	<data name="CreditCardExpiration">
+		<value>有効期限</value>
+	</data>
+	<data name="CreditCardExpirationMonth">
+		<value>月</value>
+	</data>
+	<data name="CreditCardExpirationYear">
+		<value>年</value>
+	</data>
+	<data name="CreditCardVerificationCode">
+		<value>セキュリティーコード</value>
+	</data>
+	<data name="CreditCardAddress">
+		<value>請求先住所</value>
+	</data>
+	<data name="PaymentMethodProblemTitle">
+		<value>支払い方法に問題があります</value>
+	</data>
+	<data name="PaymentMethodProblemBody">
+		<value>支払い方法の設定が出来ませんでした。エラー「__PROBLEM__」。
+
+もう一度設定を確認してください。</value>
+	</data>
+	<data name="PaymentMethodProblemNewCreditCard">
+		<value>支払い方法を設定する</value>
+	</data>
+	<data name="PaymentMethodProblemNewCreditCardLater">
+		<value>あとでする</value>
+	</data>
+	<!--
+	Login
+	-->
+	<data name="LoginTitle">
+		<value>ログイン</value>
+	</data>
+	<data name="LoginButtonLogin">
+		<value>ログイン</value>
+	</data>
+	<data name="LoginAccountUnknown">
+		<value>このメールアドレスは登録されておりません。もう一度お試しください。</value>
+	</data>
+	<data name="LoginProblem">
+		<value>予期せぬ問題が発生しました。もう一度お試しください。</value>
+	</data>
+	<!--
+	Wait for Email Verification
+	-->
+	<data name="WaitVerificationTitle">
+		<value>eメール認証</value>
+	</data>
+	<data name="WaitVerificationExplanation1">
+		<value>__EMAIL__にメールを送信しました。</value>
+	</data>
+	<data name="WaitVerificationExplanation2">
+		<value>メール内のリンクをクリックすると登録が完了します。</value>
+	</data>
+	<data name="WaitVerificationMergeBoxTitle">
+		<value>ビア・ボックスの更新</value>
+	</data>
+	<data name="WaitVerificationMergeBoxDescription">
+		<value>ログアウトした状態でボックスに追加したビールをアカウントのビア・ボックスに入れました。ご確認ください。</value>
+	</data>
+	<!-- #############
+	     Notifications
+	     ############# -->
+	<data name="NotificationAlertCancel">
+		<value>キャンセル</value>
+	</data>
+	<data name="NotificationAlertRefreshOffers">
+		<value>見る</value>
+	</data>
+	<data name="NotificationAlertShowOffers">
+		<value>見る</value>
+	</data>
+	<!-- #####
+	     Order
+	     ##### -->
+	<!--
+	Order Summary
+	-->
+	<data name="SummaryTitle">
+		<value>マイ ビア・ボックス</value>
+	</data>
+	<data name="SummaryNotLoggedIn">
+		<value>現在ログインしていません。選んだビールはビア・ボックスに入りますが、在庫は確保されず、配送もされません。</value>
+	</data>
+	<data name="SummaryCosts">
+		<value>ご注文内容</value>
+	</data>
+	<data name="SummaryCostsBeers">
+		<value>ビール</value>
+	</data>
+	<data name="SummaryCostsShipping">
+		<value>送料</value>
+	</data>
+	<data name="SummaryCostsTotal">
+		<value>合計</value>
+	</data>
+	<data name="SummaryCostsShippingTip">
+		<value>¥{0:#,0}以上ご購入の場合送料無料</value>
+	</data>
+	<data name="SummaryEndDate">
+		<value>終了日</value>
+	</data>
+	<data name="SummaryShipDate">
+		<value>発送日</value>
+	</data>
+	<data name="SummarySelectedBeers">
+		<value>マイ ビア・ボックス</value>
+	</data>
+	<data name="SummaryLinkShowDetails">
+		<value>選んだビールのリスト</value>
+	</data>
+	<data name="SummaryUniqueBeers">
+		<value>商品数</value>
+	</data>
+	<data name="SummaryTotalBeers">
+		<value>本数</value>
+	</data>
+	<!--
+	Order Ending
+	-->
+	<data name="OrderRecentlyClosedTitle">
+		<value>ニュー ビア・ボックス</value>
+	</data>
+	<data name="OrderRecentlyClosedDescription">
+		<value>前回のビア・ボックスは梱包されました。新しい空のビア・ボックスをお使いください。</value>
+	</data>
+	<data name="OrderEndingSoonTitle">
+		<value>ビア・ボックス梱包間近</value>
+	</data>
+	<data name="OrderEndingSoonDescription">
+		<value>あなたの現在のビア・ボックスは__CLOSE_DATETIME__に梱包されます。お早めにお好きなビールを追加してください。</value>
+	</data>
+	<!--
+	Order Entries
+	-->
+	<data name="OrderEntriesTitle">
+		<value>マイ ビア・ボックスを確認する</value>
+	</data>
+	<!--
+	Order History
+	-->
+	<data name="OrderHistoryTitle">
+		<value>注文履歴</value>
+	</data>
+	<!--
+	Payment Method
+	-->
+	<data name="PaymentMethodHeader">
+		<value>お支払い方法</value>
+	</data>
+	<data name="PaymentMethodCreditCard">
+		<value>クレジットカード</value>
+	</data>
+	<data name="PaymentMethodCOD">
+		<value>着払い</value>
+	</data>
+	<!--
+	Payment Method Status
+	-->
+	<data name="PaymentMethodStatusCardDeclined">
+		<value>カードが使えません</value>
+	</data>
+	<data name="PaymentMethodStatusExpiredCard">
+		<value>カードの有効期限が切れています</value>
+	</data>
+	<data name="PaymentMethodStatusIncorrectCvc">
+		<value>セキュリティーコードが正しくありません</value>
+	</data>
+	<data name="PaymentMethodStatusIncorrectNumber">
+		<value>カード番号が正しくありません</value>
+	</data>
+	<data name="PaymentMethodStatusIncorrectZip">
+		<value>郵便番号が正しくありません</value>
+	</data>
+	<data name="PaymentMethodStatusInvalidCvc">
+		<value>セキュリティーコードが正しくありません</value>
+	</data>
+	<data name="PaymentMethodStatusInvalidExpiryMonth">
+		<value>有効期限が正しくありません</value>
+	</data>
+	<data name="PaymentMethodStatusInvalidExpiryYear">
+		<value>有効期限が正しくありません</value>
+	</data>
+	<data name="PaymentMethodStatusInvalidNumber">
+		<value>カード番号が正しくありません</value>
+	</data>
+	<data name="PaymentMethodStatusUnknown">
+		<value>原因不明の問題が発生しました、最初からやり直して下さい</value>
+	</data>
+	<!--
+	Beer Details
+	-->
+	<data name="BeerDetailsTitle">
+		<value>詳細</value>
+	</data>
+	<data name="BeerDetailsABV">
+		<value>ABV（度数）</value>
+	</data>
+	<data name="BeerDetailsABVUnknown">
+		<value>不記載</value>
+	</data>
+	<data name="BeerDetailsIBU">
+		<value>IBU（苦味）</value>
+	</data>
+	<data name="BeerDetailsIBUUnknown">
+		<value>不記載</value>
+	</data>
+	<data name="BeerDetailsContainer">
+		<value>容器</value>
+	</data>
+	<data name="BeerDetailsSize">
+		<value>サイズ</value>
+	</data>
+	<data name="BeerDetailsSeperator">
+		<value>  •  </value>
+	</data>
+	<!--
+	Offers
+	-->
+	<data name="OffersTitle">
+		<value>ビール一覧</value>
+	</data>
+	<data name="OffersNoCurrent1">
+		<value>該当商品ありません</value>
+	</data>
+	<data name="OffersNoCurrent2">
+		<value>新しいビールが入荷したらお知らせ致します。</value>
+	</data>
+	<data name="OfferNotLoggedInTitle">
+		<value>ログインしていません</value>
+	</data>
+	<data name="OfferNotLoggedInDescription">
+		<value>現在ログインしていません。ビール一覧を閲覧し、ボックスに追加することは可能ですが、在庫を確保するためにはアカウントを作成しログインすることが必要です。</value>
+	</data>
+	<data name="OfferNotLoggedInLoginNow">
+		<value>ログイン / アカウント作成</value>
+	</data>
+	<data name="OfferNotLoggedInLoginLater">
+		<value>あとで</value>
+	</data>
+	<data name="OfferPrice">
+		<value>価格</value>
+	</data>
+	<data name="OfferTotal">
+		<value>合計金額</value>
+	</data>
+	<data name="OfferQuantity">
+		<value>本数</value>
+	</data>
+	<data name="OfferConfirmAdd">
+		<value>追加する</value>
+	</data>
+	<data name="OfferConfirmUpdate">
+		<value>変更する</value>
+	</data>
+	<data name="OfferNone">
+		<value>なし</value>
+	</data>
+	<data name="OfferQuantityIncrement">
+		<value>+</value>
+	</data>
+	<data name="OfferQuantityDecrement">
+		<value>-</value>
+	</data>
+	<data name="OfferQuantityLimits">
+		<value>この商品はおひとり様__MAX__本まで。</value>
+	</data>
+	<data name="OfferInsufficientInventoryTitle">
+		<value>売り切れ</value>
+	</data>
+	<data name="OfferInsufficientInventory">
+		<value>現在在庫が不足しているため、__NUMBER__本のみボックスに追加しました</value>
+	</data>
+	<data name="OfferNoInventoryTitle">
+		<value>売り切れ</value>
+	</data>
+	<data name="OfferNoInventory">
+		<value>申し訳ありません。現在在庫がありません。</value>
+	</data>
+	<data name="OfferProblemAddingTitle">
+		<value>エラーが発生しました</value>
+	</data>
+	<data name="OfferProblemAdding">
+		<value>お選びいただいたビールがボックス内にあるかご確認ください。</value>
+	</data>
+	<data name="UntappdRating">
+		<value>コミュニティ評価</value>
+	</data>
+	<data name="UntappdPersonalRating">
+		<value>自分</value>
+	</data>
+	<data name="OfferAlmostGone">
+		<value>残りわずか</value>
+	</data>
+	<data name="OfferExclusive">
+		<value>ビア・ボックス限定</value>
+	</data>
+	<data name="OfferRare">
+		<value>限定品</value>
+	</data>
+	<data name="OfferSale">
+		<value>Sale</value>
+	</data>
+	<!-- ########
+	     Settings
+	     ######## -->
+	<data name="SettingsTitle">
+		<value>設定</value>
+	</data>
+	<data name="SettingsLanguage">
+		<value>言語</value>
+	</data>
+	<data name="SettingsLanguageSystem">
+		<value>端末の言語</value>
+	</data>
+	<data name="SettingsLanguageEnglish">
+		<value>English</value>
+	</data>
+	<data name="SettingsLanguageJapanese">
+		<value>日本語</value>
+	</data>
+	<data name="SettingsTheme">
+		<value>テーマカラー</value>
+	</data>
+	<data name="SettingsThemeSystem">
+		<value>端末と同じ</value>
+	</data>
+	<data name="SettingsThemeLight">
+		<value>ライト</value>
+	</data>
+	<data name="SettingsThemeDark">
+		<value>ダーク</value>
+	</data>
+	<data name="SettingsUntappd">
+		<value>Untappd連携</value>
+	</data>
+	<data name="SettingsUntappdAbout1">
+		<value>Untappdは無料のビール評価と記録アプリです。</value>
+	</data>
+	<data name="SettingsUntappdAbout2">
+		<value>評価の星をタップすればいつでもUntappdが開けます。</value>
+	</data>
+	<data name="SettingsUntappdGlobalRating">
+		<value>みんなの評価を表示</value>
+	</data>
+	<data name="SettingsUntappdPersonalRating">
+		<value>自分の評価を表示</value>
+	</data>
+	<data name="SettingsUntappdLogin">
+		<value>Untappdにログイン</value>
+	</data>
+	<data name="SettingsUntappdLoginTip">
+		<value>自分のUntappd評価をオンにするには、beerboxにログインする必要があります。</value>
+	</data>
+	<!-- #############
+		 Untappd Login
+		 ############# -->
+	<data name="UntappdLoginTitle">
+		<value>Untappdにログイン</value>
+	</data>
+	<data name="UntappdLoginStatusEstablishingConnection">
+		<value>接続中</value>
+	</data>
+	<data name="UntappdLoginStatusLogin">
+		<value>ログイン</value>
+	</data>
+	<data name="UntappdLoginStatusVerifications">
+		<value>確認</value>
+	</data>
+	<data name="UntappdLoginStatusDone">
+		<value>完了</value>
+	</data>
+	<!-- ############
+		 How It Works
+		 ############ -->
+	<data name="HowItWorksTitle">
+		<value>アプリについて</value>
+	</data>
+	<data name="HowItWorksGetStarted">
+		<value>スタート</value>
+	</data>
+	<data name="HowItWorksContinue">
+		<value>　次へ　</value>
+	</data>
+	<data name="HowItWorksShowMeTheBeers">
+		<value>ビールを見よう！</value>
+	</data>
+	<!-- #####
+	     About
+	     ##### -->
+	<data name="AboutTitle">
+		<value>弊社について</value>
+	</data>
+	<!-- ##########
+	     Contact Us
+	     ########## -->
+	<data name="ContactUsTitle">
+		<value>お問い合せ</value>
+	</data>
+	<data name="ContactUsSubject">
+		<value>件名</value>
+	</data>
+	<data name="ContactUsMessage">
+		<value>今後のサービス向上の為、どうぞお客様の声をお聞かせください。</value>
+	</data>
+	<data name="ContactUsButtonSend">
+		<value>送信</value>
+	</data>
+	<!-- ###########
+	     Old Version
+	     ########### -->
+	<data name="OldVersionExplanation">
+		<value>現在のバージョンは最新ではありません。最新のバージョンにアップデートしてください。</value>
+	</data>
+	<data name="OldVersionUpdateNow">
+		<value>アップデートする</value>
+	</data>
+</root>

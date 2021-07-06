@@ -1,0 +1,650 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <!-- #######
+	     General
+	     ####### -->
+    <data name="AppName">
+        <value>beerbox</value>
+    </data>
+    <data name="AboutDescription">
+        <value>Compelling craft beer delivered cold to your door!</value>
+    </data>
+    <data name="Copyright">
+        <value>© 2021 Beer Cats K.K.</value>
+    </data>
+    <data name="TermsAndConditions">
+        <value>Terms and Conditions</value>
+    </data>
+    <data name="TermsAndConditionsBody">
+        <value>Company Name: Beer Cats KK
+Established: October 2013
+TEL: 03-5904-8949
+Address: 6-10-14 A602 Otsuka, Bunkyo-ku, Tokyo, 112-0012
+Managing Director: Todd Michael Stevens
+
+Orders:
+Within this application, by adding products to your 'beer box' you are making an agreement to complete purchase of those items on the cutoff date.
+
+Upon the monthly cutoff date, your box will be closed and all received orders will be finalized. We will ship your box the following day for next day delivery. However, Hokkaido, Aomori, Iwate, Akita, Chuugoku area, Shikoku, Kyushu, Okinawa, and all  other islands will require two days for delivery.
+
+Shipment methods
+・Japan Post Yuupack or Sagawa will be used (cool shipping)
+・Free Shipping for orders over 12,000 yen
+
+Payment Methods
+・Credit Card (VISA, MASTER, JCB, AMERICAN EXPRESS, DINERS）
+Upon the monthly cutoff date, your card will be automatically charged for the total.
+*Credit Card information is not stored on our servers
+
+Sales Tax:
+Rate: 10%  (Prices listed include tax)
+
+Regarding returns:
+-Once your box has arrived, please check to make sure you have received your correct order.
+-Please let us know of any discrepancies or issues with quality within one week of delivery.
+-Please ship any defective or incorrect items to our office (chakubarai) for a refund or credit.
+-Beer Cats guarantees the quality of our products 100%
+
+Return address:
+〒170-0005 
+3-35-7 5F Minami-Otsuka, Toshima-ku, Tokyo
+Beer Cats KK
+
+We do not sell alcohol to minors (under 20 years old).
+
+Privacy Policy
+			
+Appropriate Collection
+We will only collect your personal information by appropriate and fair methods.
+
+Type of Information We Collect
+The personal information we collect includes your full name, mailing address, e-mail address, and date of birth.
+
+Purpose of Use
+Personal information we collect may be used for the following purposes:
+
+Providing services on the application (hereinafter called the “app”) to customers and conducting related operations
+Processing of customer orders, responses to customer inquiries and complaints.
+Efforts to design and improve the Service customized to interests of consumers, including through sending questionnaires to customers (no personal information collected thereby will be disclosed to any third parties).
+Before using personal information for any purpose other than those listed above, we will notify you to request your consent, and will not use your personal information for such other purpose unless you give your consent.
+
+If you do not wish for us to use your personal information for the purposes described in (4), (5) and (6) above, you may opt out of such uses.
+
+Providing Information to Third Parties
+We will not provide your personal information to any third party without your advance consent, except where such disclosure:
+Is in accordance with or required by applicable law.
+Is necessary for the protection of the safety or property of our users or the public, and it is difficult or impractical to obtain the consent of the individual.
+Is necessary for public health or education and it is difficult or impractical to obtain the consent of the individual.
+Is made in cooperation with national or local authorities, or an individual or entity appointed by such authorities to enforce the law or carry out legal process, and in which seeking the consent of the individual could affect such enforcement or legal process.
+Is made pursuant to a merger, acquisition or other business combination.</value>
+    </data>
+    <data name="TaxIncluded">
+        <value>(tax incl.)</value>
+    </data>
+    <data name="MenuLogout">
+        <value>Logout</value>
+    </data>
+    <data name="ButtonCancel">
+        <value>Cancel</value>
+    </data>
+    <data name="ButtonAccept">
+        <value>OK</value>
+    </data>
+    <data name="Yen">
+        <value>¥</value>
+    </data>
+	<data name="YenBeforeNumber">
+		<value>¥{0:#,0}</value>
+	</data>
+    <data name="NetworkDisconnected">
+        <value>It seems you are no longer connected to the internet. Please reconnect to continue using beerbox.</value>
+    </data>    
+    <!-- #######
+	     Account
+	     ####### -->
+    <!--
+	General Account Strings
+	-->
+    <data name="AccountEmailAddress">
+        <value>email address</value>
+    </data>
+    <data name="AccountName">
+        <value>name</value>
+    </data>
+    <data name="AccountShippingAddress">
+        <value>shipping address</value>
+    </data>
+    <data name="AccountPhoneNumber">
+        <value>TEL</value>
+    </data>
+    <data name="AccountPhoneNumberTip">
+        <value>Needed for delivery courier.</value>
+    </data>
+    <data name="AccountProblemAccessForbiddenTitle">
+        <value>Problem Updating Account</value>
+    </data>
+    <data name="AccountProblemAccessForbidden">
+        <value>Looks like there was a problem updating your account. Please login again.</value>
+    </data>
+    <data name="AccountProblemContactInformationInvalid">
+        <value>Please check that you've provided your complete contact information.</value>
+    </data>
+    <data name="AccountProblemCreditCardInvalid">
+        <value>The credit card information provided was incomplete.</value>
+    </data>
+    <data name="AccountProblemEmailAlreadyExists">
+        <value>Looks like we already have an account with that email address.</value>
+    </data>
+    <data name="AccountProblemShippingAddressInvalid">
+        <value>Looks like there was a problem with the address provided, please confirm it is correct.</value>
+    </data>
+    <data name="AccountProblemUnknownError">
+        <value>Sorry! looks like there was an error, please try again.</value>
+    </data>
+    <!--
+	Address
+	-->
+    <data name="AddressPostalCode">
+        <value>postal code</value>
+    </data>
+    <data name="AddressPrefecture">
+        <value>prefecture</value>
+    </data>
+    <data name="AddressLocal">
+        <value>address</value>
+    </data>
+    <data name="CreditCardSameAsShipping">
+        <value>same as shipping address</value>
+    </data>
+    <!--
+	Create Account
+	-->
+    <data name="CreateAccountTitle">
+        <value>Create Account</value>
+    </data>
+    <data name="CreateAccountButtonCreate">
+        <value>Create Account</value>
+    </data>
+    <data name="CreateAccountAgreeToTerms">
+        <value>I agree</value>
+    </data>
+    <data name="CreateAccountBirthdate">
+        <value>Birthdate</value>
+    </data>
+    <data name="CreateAccountBirthdateTip">
+        <value>You must be at least 20 years old to use this service.</value>
+    </data>
+    <!--
+	Edit Account
+	-->
+    <data name="EditAccountTitle">
+        <value>My Account</value>
+    </data>
+    <data name="EditContactInfoLink">
+        <value>edit contact information</value>
+    </data>
+    <data name="EditShippingAddressLink">
+        <value>edit shipping address</value>
+    </data>
+    <data name="ChangePaymentMethodLink">
+        <value>change payment method</value>
+    </data>
+    <data name="EditContactInformationTitle">
+        <value>Edit Contact Information</value>
+    </data>
+    <data name="EditShippingAddressTitle">
+        <value>Edit Shipping Address</value>
+    </data>
+    <data name="EditPaymentMethodTitle">
+        <value>Edit Payment Method</value>
+    </data>
+    <data name="EditAccountButtonSave">
+        <value>save</value>
+    </data>
+    <!--
+	Credit Card
+	-->
+    <data name="CreditCardNotStoredOnServer">
+        <value>credit card information is not stored on our servers</value>
+    </data>
+    <data name="CreditCardAllowedCards">
+        <value>Visa, Mastercard, American Express, JCB</value>
+    </data>
+    <data name="CreditCardNameOnCard">
+        <value>name on card</value>
+    </data>
+    <data name="CreditCardCardNumber">
+        <value>card number</value>
+    </data>
+    <data name="CreditCardExpiration">
+        <value>expiration</value>
+    </data>
+    <data name="CreditCardExpirationMonth">
+        <value>month</value>
+    </data>
+    <data name="CreditCardExpirationYear">
+        <value>year</value>
+    </data>
+    <data name="CreditCardVerificationCode">
+        <value>CVV2/CVC2</value>
+    </data>
+    <data name="CreditCardAddress">
+        <value>billing address</value>
+    </data>
+    <data name="PaymentMethodProblemTitle">
+        <value>Issue With Payment Method</value>
+    </data>
+    <data name="PaymentMethodProblemBody">
+        <value>There is an issue with your payment method, "__PROBLEM__".
+
+Please select a valid payment method or we may not be able to send your beerbox.</value>
+    </data>
+    <data name="PaymentMethodProblemNewCreditCard">
+        <value>set payment method now</value>
+    </data>
+    <data name="PaymentMethodProblemNewCreditCardLater">
+        <value>set it later</value>
+    </data>
+    <!--
+	Login
+	-->
+    <data name="LoginTitle">
+        <value>Login</value>
+    </data>
+    <data name="LoginButtonLogin">
+        <value>login</value>
+    </data>
+    <data name="LoginAccountUnknown">
+        <value>Oops! We don't seem to know about that account. Please check your email address.</value>
+    </data>
+    <data name="LoginProblem">
+        <value>Oops! We've run into a problem, please try again.</value>
+    </data>
+    <!--
+	Wait for Email Verification
+	-->
+    <data name="WaitVerificationTitle">
+        <value>Email Verification</value>
+    </data>
+    <data name="WaitVerificationExplanation1">
+        <value>A verification email has been sent to __EMAIL__. Please click on the link in the email to activate your account.</value>
+    </data>
+    <data name="WaitVerificationExplanation2">
+        <value>Once you click the link, your account will be activated.</value>
+    </data>
+    <data name="WaitVerificationMergeBoxTitle">
+        <value>Merged beerbox</value>
+    </data>
+    <data name="WaitVerificationMergeBoxDescription">
+        <value>We've carried the items you ordered into your new account's beerbox.</value>
+    </data>
+    <!-- #############
+	     Notifications
+	     ############# -->
+    <data name="NotificationAlertCancel">
+        <value>cancel</value>
+    </data>
+    <data name="NotificationAlertRefreshOffers">
+        <value>refresh</value>
+    </data>
+    <data name="NotificationAlertShowOffers">
+        <value>see offers</value>
+    </data>
+    <!-- #####
+	     Order
+	     ##### -->
+    <!--
+	Order Summary
+	-->
+    <data name="SummaryTitle">
+        <value>My beerbox</value>
+    </data>
+    <data name="SummaryNotLoggedIn">
+        <value>You are currently logged out. We will keep track of the beers you select in this beerbox, but they will not be reserved and will not ship until you log in.</value>
+    </data>
+    <data name="SummaryCosts">
+        <value>your order</value>
+    </data>
+    <data name="SummaryCostsBeers">
+        <value>beers</value>
+    </data>
+    <data name="SummaryCostsShipping">
+        <value>shipping</value>
+    </data>
+    <data name="SummaryCostsTotal">
+        <value>total</value>
+    </data>
+    <data name="SummaryCostsShippingTip">
+        <value>Cool shipping is free for orders above ¥{0:#,0}.</value>
+    </data>
+    <data name="SummaryEndDate">
+        <value>keep adding beers until</value>
+    </data>
+    <data name="SummaryShipDate">
+        <value>planned shipping date</value>
+    </data>
+    <data name="SummarySelectedBeers">
+        <value>my beerbox</value>
+    </data>
+    <data name="SummaryLinkShowDetails">
+        <value>check my beerbox</value>
+    </data>
+    <data name="SummaryUniqueBeers">
+        <value>unique</value>
+    </data>
+    <data name="SummaryTotalBeers">
+        <value>total</value>
+    </data>
+	<!--
+	Order Ending
+	-->
+	<data name="OrderRecentlyClosedTitle">
+        <value>new beerbox</value>
+    </data>
+    <data name="OrderRecentlyClosedDescription">
+        <value>Your previous beerbox was closed and you now have a new empty beerbox.</value>
+    </data>
+	<data name="OrderEndingSoonTitle">
+        <value>beerbox closing soon</value>
+    </data>
+    <data name="OrderEndingSoonDescription">
+        <value>Your current beerbox will close at end of __CLOSE_DATETIME__, so make sure you add any beers you want before it closes.</value>
+    </data>
+    <!--
+	Order Entries
+	-->
+    <data name="OrderEntriesTitle">
+        <value>My beerbox Items</value>
+    </data>
+    <!--
+	Order History
+	-->
+    <data name="OrderHistoryTitle">
+        <value>Order History</value>
+    </data>
+	<!--
+	Payment Method
+	-->
+    <data name="PaymentMethodHeader">
+        <value>Payment Method</value>
+    </data>
+    <data name="PaymentMethodCreditCard">
+        <value>credit card</value>
+    </data>
+    <data name="PaymentMethodCOD">
+        <value>COD</value>
+    </data>
+	<!--
+	Payment Method Status
+	-->
+    <data name="PaymentMethodStatusCardDeclined">
+        <value>card authorization failed</value>
+    </data>
+    <data name="PaymentMethodStatusExpiredCard">
+        <value>your card has expired</value>
+    </data>
+    <data name="PaymentMethodStatusIncorrectCvc">
+        <value>incorrect CVC</value>
+    </data>
+    <data name="PaymentMethodStatusIncorrectNumber">
+        <value>incorrect card number</value>
+    </data>
+    <data name="PaymentMethodStatusIncorrectZip">
+        <value>invalid postal code</value>
+    </data>
+    <data name="PaymentMethodStatusInvalidCvc">
+        <value>invalid CVC</value>
+    </data>
+    <data name="PaymentMethodStatusInvalidExpiryMonth">
+        <value>invalid expiration date</value>
+    </data>
+    <data name="PaymentMethodStatusInvalidExpiryYear">
+        <value>invalid expiration date</value>
+    </data>
+    <data name="PaymentMethodStatusInvalidNumber">
+        <value>invalid card number</value>
+    </data>
+    <data name="PaymentMethodStatusUnknown">
+        <value>an unknown problem occurred</value>
+    </data>
+    <!--
+	Beer Details
+	-->
+    <data name="BeerDetailsTitle">
+        <value>Details</value>
+    </data>
+    <data name="BeerDetailsABV">
+        <value>ABV</value>
+    </data>
+    <data name="BeerDetailsABVUnknown">
+        <value>N/A</value>
+    </data>
+    <data name="BeerDetailsIBU">
+        <value>IBU</value>
+    </data>
+    <data name="BeerDetailsIBUUnknown">
+        <value>unknown</value>
+    </data>
+    <data name="BeerDetailsContainer">
+        <value>packaging</value>
+    </data>
+    <data name="BeerDetailsSize">
+        <value>size</value>
+    </data>
+    <data name="BeerDetailsSeperator">
+        <value>  •  </value>
+    </data>
+    <!--
+	Offers
+	-->
+    <data name="OffersTitle">
+        <value>Current Offers</value>
+    </data>
+    <data name="OffersNoCurrent1">
+        <value>Hang tight while we prepare some new offers!</value>
+    </data>
+    <data name="OffersNoCurrent2">
+        <value>We will notify you when we add new beers!</value>
+    </data>
+    <data name="OfferNotLoggedInTitle">
+        <value>Not Logged In</value>
+    </data>
+    <data name="OfferNotLoggedInDescription">
+        <value>You are currently not logged in. You may add items to your beerbox, but the reservations will not be finalized until you create an account and login.</value>
+    </data>
+    <data name="OfferNotLoggedInLoginNow">
+        <value>Login / Create Account</value>
+    </data>
+    <data name="OfferNotLoggedInLoginLater">
+        <value>Later</value>
+    </data>
+    <data name="OfferPrice">
+        <value>price</value>
+    </data>
+    <data name="OfferTotal">
+        <value>total</value>
+    </data>
+    <data name="OfferQuantity">
+        <value>quantity</value>
+    </data>
+    <data name="OfferConfirmAdd">
+        <value>add to beerbox</value>
+    </data>
+    <data name="OfferConfirmUpdate">
+        <value>update beerbox</value>
+    </data>
+    <data name="OfferNone">
+        <value>none</value>
+    </data>
+    <data name="OfferQuantityIncrement">
+        <value>+</value>
+    </data>
+    <data name="OfferQuantityDecrement">
+        <value>-</value>
+    </data>
+    <data name="OfferQuantityLimits">
+        <value>This item has a limit of __MAX__ per order.</value>
+    </data>
+    <data name="OfferInsufficientInventoryTitle">
+        <value>Sold out!</value>
+    </data>
+    <data name="OfferInsufficientInventory">
+        <value>This item is popular! We were only able to add __NUMBER__ to your beerbox.</value>
+    </data>
+    <data name="OfferNoInventoryTitle">
+        <value>Sold out!</value>
+    </data>
+    <data name="OfferNoInventory">
+        <value>This item was popular! Looks like we've run out of that beer.</value>
+    </data>
+    <data name="OfferProblemAddingTitle">
+        <value>Oops! looks like there was an error</value>
+    </data>
+    <data name="OfferProblemAdding">
+        <value>please pull down to refresh and try again</value>
+    </data>
+    <data name="UntappdRating">
+        <value>community</value>
+	</data>
+    <data name="UntappdPersonalRating">
+        <value>you</value>
+	</data>
+    <data name="OfferAlmostGone">
+        <value>almost gone</value>
+	</data>
+	<data name="OfferExclusive">
+		<value>Exclusive</value>
+	</data>
+	<data name="OfferRare">
+		<value>Rare</value>
+	</data>
+	<data name="OfferSale">
+		<value>Sale</value>
+	</data>
+    <!-- ########
+	     Settings
+	     ######## -->
+    <data name="SettingsTitle">
+        <value>Settings</value>
+    </data>
+    <data name="SettingsLanguage">
+        <value>language</value>
+    </data>
+    <data name="SettingsLanguageSystem">
+        <value>system</value>
+    </data>
+    <data name="SettingsLanguageEnglish">
+        <value>English</value>
+    </data>
+    <data name="SettingsLanguageJapanese">
+        <value>Japanese</value>
+    </data>
+    <data name="SettingsTheme">
+        <value>theme</value>
+    </data>
+    <data name="SettingsThemeSystem">
+        <value>system</value>
+    </data>
+    <data name="SettingsThemeLight">
+        <value>light</value>
+    </data>
+    <data name="SettingsThemeDark">
+        <value>dark</value>
+    </data>
+    <data name="SettingsUntappd">
+        <value>Untappd Integration</value>
+    </data>
+    <data name="SettingsUntappdAbout1">
+        <value>Untappd is a free app that lets you track and rate beers you drink.</value>
+    </data>
+    <data name="SettingsUntappdAbout2">
+        <value>Tap on the Untappd ratings on a beer page to open that beer in the Untappd app.</value>
+    </data>
+    <data name="SettingsUntappdGlobalRating">
+        <value>show average rating</value>
+    </data>
+    <data name="SettingsUntappdPersonalRating">
+        <value>show your rating</value>
+    </data>
+    <data name="SettingsUntappdLogin">
+        <value>login to Untappd</value>
+    </data>
+    <data name="SettingsUntappdLoginTip">
+        <value>To turn on your Untappd ratings, you must first log in to beerbox.</value>
+    </data>
+	<!-- #############
+		 Untappd Login
+		 ############# -->
+    <data name="UntappdLoginTitle">
+        <value>login to Untappd</value>
+    </data>
+    <data name="UntappdLoginStatusEstablishingConnection">
+        <value>establishing connection</value>
+    </data>
+    <data name="UntappdLoginStatusLogin">
+        <value>login</value>
+    </data>
+    <data name="UntappdLoginStatusVerifications">
+        <value>verification</value>
+    </data>
+    <data name="UntappdLoginStatusDone">
+        <value>done</value>
+    </data>
+	<!-- ############
+		 How It Works
+		 ############ -->
+    <data name="HowItWorksTitle">
+        <value>How It Works</value>
+    </data>
+    <data name="HowItWorksGetStarted">
+        <value>get started</value>
+    </data>
+    <data name="HowItWorksContinue">
+        <value>continue</value>
+    </data>
+    <data name="HowItWorksShowMeTheBeers">
+        <value>show me the beers!</value>
+    </data>
+    <!-- #####
+	     About
+	     ##### -->
+    <data name="AboutTitle">
+        <value>About Us</value>
+    </data>
+    <!-- ##########
+	     Contact Us
+	     ########## -->
+    <data name="ContactUsTitle">
+        <value>Contact Us</value>
+    </data>
+    <data name="ContactUsSubject">
+        <value>subject</value>
+    </data>
+    <data name="ContactUsMessage">
+        <value>we'd love to hear your thoughts</value>
+    </data>
+    <data name="ContactUsButtonSend">
+        <value>send message</value>
+    </data>
+    <!-- ###########
+	     Old Version
+	     ########### -->
+    <data name="OldVersionExplanation">
+        <value>You have an old version of beerbox. You will need to update to the latest version to use the app.</value>
+    </data>
+    <data name="OldVersionUpdateNow">
+        <value>update now</value>
+    </data>
+</root>
