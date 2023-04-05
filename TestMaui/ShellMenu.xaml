@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+	x:Class="TestMaui.ShellMenu"
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:TestMaui"
+	x:Name="This"
+	FlyoutBackgroundColor="#ccbbbbbb"
+	BackgroundColor="#cc888888"
+	FlyoutWidth="250">
+
+	<!--  The Margin="0" is required due to a MAUI bug: see https://learn.microsoft.com/en-us/answers/questions/1185431/customize-shell-template-breaks-navigation  -->
+	<Shell.FlyoutHeader>
+		<Grid
+			Margin="0"
+			HeightRequest="100">
+			<Image
+				Margin="0,-30,0,-30"
+				Aspect="AspectFit"
+				Source="dotnet_bot.png" />
+		</Grid>
+	</Shell.FlyoutHeader>
+
+	<Shell.ItemTemplate>
+		<DataTemplate x:DataType="ShellContent">
+			<StackLayout
+				Padding="6,10"
+				VerticalOptions="CenterAndExpand">
+				<StackLayout.GestureRecognizers>
+					<TapGestureRecognizer
+						Command="{Binding NavigateTo, Source={x:Reference This}}"
+						CommandParameter="{Binding .}"
+						NumberOfTapsRequired="1" />
+				</StackLayout.GestureRecognizers>
+				<Image
+					HeightRequest="20"
+					Source="{Binding FlyoutIcon}"
+					VerticalOptions="Center"
+					WidthRequest="20" />
+				<Label
+					HorizontalOptions="FillAndExpand"
+					Text="{Binding Title}"
+					VerticalOptions="Center" />
+			</StackLayout>
+		</DataTemplate>
+	</Shell.ItemTemplate>
+
+	<Shell.MenuItemTemplate>
+		<DataTemplate x:DataType="MenuItem">
+			<BoxView
+				Margin="0"
+				HeightRequest="1" />
+		</DataTemplate>
+	</Shell.MenuItemTemplate>
+
+	<ShellContent
+		Title="Main Page"
+		ContentTemplate="{DataTemplate local:MainPage}"
+		FlyoutIcon="dotnet_bot.png"
+		Route="mainpage" />
+
+	<ShellContent
+		Title="Main Page 2"
+		ContentTemplate="{DataTemplate local:MainPage}"
+		FlyoutIcon="dotnet_bot.png"
+		Route="mainpage" />
+</Shell>
