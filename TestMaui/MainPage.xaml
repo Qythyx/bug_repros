@@ -5,38 +5,46 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:testmaui="clr-namespace:TestMaui"
 	Style="{DynamicResource ContentPage}">
-	<ScrollView>
-		<VerticalStackLayout
+    <ScrollView>
+        <VerticalStackLayout
 			Padding="30,0"
 			Spacing="25"
 			VerticalOptions="Center">
 
-			<Image
+            <Image
+				x:Name="TheImage"
 				HorizontalOptions="Center"
 				SemanticProperties.Description="Cute dot net bot waving hi to you!"
 				Source="dotnet_bot.png" />
 
-			<Label
+            <Label
 				FontSize="32"
+				x:Name="Heading1"
 				HorizontalOptions="Center"
 				SemanticProperties.HeadingLevel="Level1"
 				Style="{DynamicResource LabelHeader}"
 				Text="Hello, World!" />
 
-			<Label
+            <Label
 				FontSize="18"
+				x:Name="Heading2"
 				HorizontalOptions="Center"
 				SemanticProperties.Description="Welcome to dot net Multi platform App U I"
 				SemanticProperties.HeadingLevel="Level2"
 				Text="Welcome to .NET Multi-platform App UI" />
 
-			<Button
+            <testmaui:SizeLinkedImage
+				HorizontalOptions="Center"
+				HeightTarget="{Binding ., Source={x:Reference Name=Heading1}}"
+				Source="dotnet_bot.png" />
+
+            <Button
 				x:Name="CounterBtn"
 				Clicked="OnCounterClicked"
 				HorizontalOptions="Center"
 				SemanticProperties.Hint="Counts the number of times you click"
 				Text="Click me" />
-		</VerticalStackLayout>
-	</ScrollView>
+        </VerticalStackLayout>
+    </ScrollView>
 </testmaui:BaseContentPage>
 

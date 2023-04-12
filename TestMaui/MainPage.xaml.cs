@@ -23,6 +23,9 @@ public partial class MainPage : BaseContentPage
         else
             CounterBtn.Text = $"Clicked {count} times";
 
+        TheImage.WidthRequest = 50 + 200 * Random.Shared.NextDouble();
+        TheImage.HeightRequest = 50 + 200 * Random.Shared.NextDouble();
+
         SemanticScreenReader.Announce(CounterBtn.Text);
     }
 }
