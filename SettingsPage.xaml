@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  x:Class="TitleViewBug.SettingsPage"
+  Padding="0"
+  Shell.NavBarHasShadow="False"
+>
+  <Shell.TitleView>
+    <Grid BackgroundColor="Red" Padding="0" Margin="0" ColumnSpacing="0" ColumnDefinitions="Auto,*">
+      <Label Text="☰" FontSize="24" TextColor="White" VerticalOptions="Center" Margin="10,0" />
+      <Label
+        Grid.Column="1"
+        Text="SETTINGS"
+        TextColor="White"
+        FontSize="16"
+        FontAttributes="Bold"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+      />
+    </Grid>
+  </Shell.TitleView>
+
+  <BoxView Color="DodgerBlue" />
+</ContentPage>
