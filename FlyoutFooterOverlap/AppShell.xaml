@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    BUG REPRODUCTION: Shell flyout items overlap the FlyoutHeader and FlyoutFooter.
+
+    1. Items scroll behind the header (visible through semi-transparent header).
+    2. When items are tall enough to overflow, they extend into the footer area
+       instead of the scroll area being constrained above the footer.
+
+    To reproduce: Open the flyout. Items overlap both header and footer.
+-->
+<Shell
+  x:Class="FlyoutFooterOverlap.AppShell"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:local="clr-namespace:FlyoutFooterOverlap"
+  Title="FlyoutFooterOverlap"
+  FlyoutBehavior="Flyout"
+>
+  <!-- Header: semi-transparent to show items scrolling behind it -->
+  <Shell.FlyoutHeaderTemplate>
+    <DataTemplate>
+      <Grid BackgroundColor="#80333399" HeightRequest="150" Padding="10">
+        <Label
+          Text="App Header"
+          TextColor="White"
+          FontSize="24"
+          FontAttributes="Bold"
+          HorizontalTextAlignment="Center"
+          VerticalTextAlignment="Center"
+        />
+      </Grid>
+    </DataTemplate>
+  </Shell.FlyoutHeaderTemplate>
+
+  <!-- Tall item template to simulate large font scaling -->
+  <Shell.ItemTemplate>
+    <DataTemplate>
+      <Grid ColumnDefinitions="Auto,*" Padding="10,5">
+        <Image
+          Source="{Binding FlyoutIcon}"
+          HeightRequest="50"
+          WidthRequest="50"
+          VerticalOptions="Center"
+        />
+        <Label
+          Grid.Column="1"
+          Text="{Binding Title}"
+          TextColor="Black"
+          VerticalTextAlignment="Center"
+          FontSize="28"
+          Padding="10,0,0,0"
+          BackgroundColor="White"
+        />
+      </Grid>
+    </DataTemplate>
+  </Shell.ItemTemplate>
+
+  <!-- Footer: semi-transparent to show items overlapping it -->
+  <Shell.FlyoutFooterTemplate>
+    <DataTemplate>
+      <Grid Padding="10">
+        <Label
+          Text="FOOTER"
+          TextColor="Red"
+          FontSize="56"
+          HorizontalTextAlignment="Center"
+          BackgroundColor="#80333399"
+          Padding="10"
+          Opacity="0.6"
+        />
+      </Grid>
+    </DataTemplate>
+  </Shell.FlyoutFooterTemplate>
+
+  <!-- 15 items — tall enough to overflow past footer -->
+  <FlyoutItem Title="Page 1" Icon="dotnet_bot.png">
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="Page1" />
+  </FlyoutItem>
+  <FlyoutItem Title="Page 2" Icon="dotnet_bot.png">
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="Page2" />
+  </FlyoutItem>
+  <FlyoutItem Title="Page 3" Icon="dotnet_bot.png">
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="Page3" />
+  </FlyoutItem>
+  <FlyoutItem Title="Page 4" Icon="dotnet_bot.png">
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="Page4" />
+  </FlyoutItem>
+  <FlyoutItem Title="Page 5" Icon="dotnet_bot.png">
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="Page5" />
+  </FlyoutItem>
+  <FlyoutItem Title="Page 6" Icon="dotnet_bot.png">
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="Page6" />
+  </FlyoutItem>
+  <FlyoutItem Title="Page 7" Icon="dotnet_bot.png">
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="Page7" />
+  </FlyoutItem>
+  <FlyoutItem Title="Page 8" Icon="dotnet_bot.png">
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="Page8" />
+  </FlyoutItem>
+  <FlyoutItem Title="Page 9" Icon="dotnet_bot.png">
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="Page9" />
+  </FlyoutItem>
+  <FlyoutItem Title="Page 10" Icon="dotnet_bot.png">
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="Page10" />
+  </FlyoutItem>
+  <FlyoutItem Title="Page 11" Icon="dotnet_bot.png">
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="Page11" />
+  </FlyoutItem>
+  <FlyoutItem Title="Page 12" Icon="dotnet_bot.png">
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="Page12" />
+  </FlyoutItem>
+  <FlyoutItem Title="Page 13" Icon="dotnet_bot.png">
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="Page13" />
+  </FlyoutItem>
+  <FlyoutItem Title="Page 14" Icon="dotnet_bot.png">
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="Page14" />
+  </FlyoutItem>
+  <FlyoutItem Title="Page 15" Icon="dotnet_bot.png">
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="Page15" />
+  </FlyoutItem>
+</Shell>
