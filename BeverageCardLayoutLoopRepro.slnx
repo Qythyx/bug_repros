@@ -1,0 +1,5 @@
+<Solution>
+	<Folder Name="/">
+		<Project Path="BeverageCardLayoutLoopRepro/BeverageCardLayoutLoopRepro.csproj" />
+	</Folder>
+</Solution>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net10.0-ios</TargetFramework>
+		<UseMaui>True</UseMaui>
+		<OutputType>Exe</OutputType>
+		<SingleProject>true</SingleProject>
+		<UseInterpreter Condition="'$(Configuration)' != 'Release'">True</UseInterpreter>
+		<Copyright>Copyright © 2026</Copyright>
+		<ApplicationTitle>beerbox</ApplicationTitle>
+		<ApplicationDisplayVersion>1.3.0</ApplicationDisplayVersion>
+		<ApplicationId>jp.beercats.beerbox</ApplicationId>
+		<ApplicationVersion>37</ApplicationVersion>
+		<SupportedOSPlatformVersion>15.0</SupportedOSPlatformVersion>
+		<RootNamespace>Beerbox.App</RootNamespace>
+		<!-- This is expected to match the ApplicationTitle -->
+		<AssemblyName>beerbox</AssemblyName>
+		<Configurations>Debug;Release</Configurations>
+		<ReleaseVersion>1.3.0.37</ReleaseVersion>
+		<NeutralLanguage>en</NeutralLanguage>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+		<CreatePackage>false</CreatePackage>
+		<CodesignKey>Apple Development: Rainer Mager (HT8E2X7W89)</CodesignKey>
+		<CodesignProvision>Automatic</CodesignProvision>
+		<CodesignEntitlements>Platforms/iOS/Entitlements-development.plist</CodesignEntitlements>
+		<MtouchEnableBitcode>false</MtouchEnableBitcode>
+		<MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+		<RuntimeIdentifier>iossimulator-arm64</RuntimeIdentifier>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<CreatePackage>false</CreatePackage>
+		<CodesignEntitlements>Platforms/iOS/Entitlements-production.plist</CodesignEntitlements>
+		<MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="CardsView.Maui" />
+		<PackageReference Include="CommunityToolkit.Maui" />
+		<PackageReference Include="CommunityToolkit.Maui.Markup" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Memory" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" />
+		<PackageReference Include="Microsoft.Maui.Controls" />
+		<PackageReference Include="CommunityToolkit.Mvvm" />
+		<PackageReference Include="Reactor.Maui" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+		<PackageReference Include="Reactor.Maui.HotReload" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Mock\Core\Services\TestBeverages.json" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\Localization\AppResources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<Compile Update="Resources\Localization\AppResources.Designer.cs">
+			<AutoGen>true</AutoGen>
+			<DesignTime>true</DesignTime>
+			<DependentUpon>AppResources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<ITunesArtwork Include="Platforms\iOS\iTunesArtwork" />
+		<ITunesArtwork Include="Platforms\iOS\iTunesArtwork%402x" />
+	</ItemGroup>
+	<ItemGroup>
+		<MauiIcon Include="Resources\AppIcon\app_icon.png" />
+		<MauiSplashScreen Include="Resources\Splash\splash_logo.png" Color="#FFB300" BaseSize="200,200" />
+		<MauiFont Include="Resources\Fonts\*" />
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\hamburger_menu.svg" TintColor="#FFB300" />
+		<MauiImage Update="Resources\Images\chevron_left.svg" TintColor="#FFB300" />
+	</ItemGroup>
+</Project>
