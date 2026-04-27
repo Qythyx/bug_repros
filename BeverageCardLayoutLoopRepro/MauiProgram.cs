@@ -1,13 +1,8 @@
-using Beerbox.App.Core;
-using Beerbox.App.Core.Services;
 using Beerbox.App.Pages;
-using Beerbox.App.Services;
 using Beerbox.App.Theming;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Markup;
 using MauiReactor;
-using Microsoft.Maui.LifecycleEvents;
-using PanCardView;
 #if DEBUG
 using MauiReactor.HotReload;
 #endif
@@ -26,7 +21,6 @@ public static class MauiProgram
 #endif
 			.UseMauiCommunityToolkit()
 			.UseMauiCommunityToolkitMarkup()
-			.UseCardsView()
 			.ConfigureFonts(fonts =>
 				fonts
 					.AddFont("Roboto-Bold.ttf", AppFonts.RobotoBold)
@@ -40,31 +34,6 @@ public static class MauiProgram
 #if DEBUG
 		Microsoft.Extensions.Logging.DebugLoggerFactoryExtensions.AddDebug(builder.Logging);
 #endif
-
-		builder.Services.AddSingleton<AppSettings>(new BeerboxAppSettings(DefaultLanguageProvider.DefaultLanguage));
-		builder.Services.AddSingleton<IBackendConfiguration>(sp => new BackendConfiguration(
-			sp.GetRequiredService<AppSettings>(),
-			DeviceInfo.Current.Platform == DevicePlatform.Android
-		));
-		builder.Services.AddSingleton<IPlatformContext, PlatformContext>();
-		builder.Services.AddSingleton<IVibrator, Vibrator>();
-		builder.Services.AddSingleton<LoggerBase, Logger>();
-
-		builder.Services.AddSingleton<IConnectivityService, MockConnectivityService>();
-		var mockDataManager = new MockDataManager();
-		builder.Services.AddSingleton<DataManager>(mockDataManager);
-		builder.Services.AddSingleton<BeerboxTelemetryService>(mockDataManager.MockTelemetry);
-		builder.Services.AddSingleton<IExceptionHandler>(mockDataManager.MockTelemetry);
-
-		builder.Services.AddSingleton<AppLifecycleService>();
-
-		builder.ConfigureLifecycleEvents(events =>
-			events.AddiOS(ios =>
-			{
-				ios.OnActivated(_ => AppLifecycleService.OnResume());
-				ios.OnResignActivation(_ => AppLifecycleService.OnSleep());
-			})
-		);
 
 		Platforms.iOS.Handlers.ShellHandlerExtensions.Register(builder);
 		Platforms.iOS.Handlers.DatePickerHandlerExtensions.Register();

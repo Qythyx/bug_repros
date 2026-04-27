@@ -34,20 +34,14 @@
 		<MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="CardsView.Maui" />
 		<PackageReference Include="CommunityToolkit.Maui" />
 		<PackageReference Include="CommunityToolkit.Maui.Markup" />
-		<PackageReference Include="Microsoft.Extensions.Caching.Memory" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" />
 		<PackageReference Include="Microsoft.Maui.Controls" />
-		<PackageReference Include="CommunityToolkit.Mvvm" />
 		<PackageReference Include="Reactor.Maui" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
 		<PackageReference Include="Reactor.Maui.HotReload" />
-	</ItemGroup>
-	<ItemGroup>
-		<EmbeddedResource Include="Mock\Core\Services\TestBeverages.json" />
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Update="Resources\Localization\AppResources.resx">
