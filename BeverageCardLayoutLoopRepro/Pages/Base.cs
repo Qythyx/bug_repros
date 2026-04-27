@@ -38,30 +38,31 @@ public abstract partial class Base<TState, TProps> : Component<TState, TProps>
 		var body = Border(content).StrokeThickness(0).BackgroundColor(AppColors.PageBackground.Resolve);
 		var titleBar = RenderTitleBar();
 
-		var page = DeviceInfo.Current.Platform == DevicePlatform.Android
-			? ContentPage(
-					Grid("*", "*", body)
-						.RowSpacing(0)
-						.Set(Layout.SafeAreaEdgesProperty, AppStyles.SafeAreaEdgesTopOnly)
-						.IsVisible(_showBody)
-				)
-				.TitleView(titleBar)
-				.OnLoaded(() =>
-				{
-					if (!_showBody)
+		var page =
+			DeviceInfo.Current.Platform == DevicePlatform.Android
+				? ContentPage(
+						Grid("*", "*", body)
+							.RowSpacing(0)
+							.Set(Layout.SafeAreaEdgesProperty, AppStyles.SafeAreaEdgesTopOnly)
+							.IsVisible(_showBody)
+					)
+					.TitleView(titleBar)
+					.OnLoaded(() =>
 					{
-						_showBody = true;
-						Invalidate();
-					}
-				})
-				.OnDisappearing(() => _showBody = false)
-			: ContentPage(
-					Grid("Auto,*", "*", titleBar.GridRow(0), body.GridRow(1))
-						.RowSpacing(0)
-						.BackgroundColor(AppColors.ControlArea.Resolve)
-						.Set(Layout.SafeAreaEdgesProperty, AppStyles.SafeAreaEdgesTopOnly)
-				)
-				.Set(MauiControls.Shell.NavBarIsVisibleProperty, false);
+						if (!_showBody)
+						{
+							_showBody = true;
+							Invalidate();
+						}
+					})
+					.OnDisappearing(() => _showBody = false)
+				: ContentPage(
+						Grid("Auto,*", "*", titleBar.GridRow(0), body.GridRow(1))
+							.RowSpacing(0)
+							.BackgroundColor(AppColors.ControlArea.Resolve)
+							.Set(Layout.SafeAreaEdgesProperty, AppStyles.SafeAreaEdgesTopOnly)
+					)
+					.Set(MauiControls.Shell.NavBarIsVisibleProperty, false);
 
 		return page.BackButtonBehavior(new() { IsVisible = false });
 	}
@@ -71,7 +72,6 @@ public abstract partial class Base<TState, TProps> : Component<TState, TProps>
 				"*,Auto",
 				"Auto,Auto,*,Auto,Auto",
 				Image()
-					.ID(AutomationIds.TitleView.Back)
 					.Source(AppImages.ChevronLeft)
 					.VCenter()
 					.IsVisible(ShowBackButton)
@@ -80,7 +80,6 @@ public abstract partial class Base<TState, TProps> : Component<TState, TProps>
 				Image()
 					.Source(AppImages.HamburgerMenu)
 					.VCenter()
-					.ID(AutomationIds.TitleView.HamburgerMenu)
 					.OnTapped(() => MauiControls.Shell.Current.FlyoutIsPresented = true)
 					.GridColumn(1),
 				Label(PageTitle)

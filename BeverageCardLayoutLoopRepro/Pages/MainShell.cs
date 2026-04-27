@@ -1,7 +1,6 @@
 using Beerbox.App.Theming;
 using MauiReactor;
 using AIs = Beerbox.App.Theming.AppImages.Icons;
-using IDs = Beerbox.App.AutomationIds.Shell;
 using MauiControls = Microsoft.Maui.Controls;
 
 namespace Beerbox.App.Pages;
@@ -33,11 +32,7 @@ public sealed class MainShell : Component<MainShell.MyState>
 		IPlatformApplication.Current?.Services.GetService<IStatusBarStyleManager>()?.SetColor(AppColors.ControlArea.Resolve);
 
 		return Shell(
-				ShellContent("Order History")
-					.FlyoutIcon(AIs.OrderHistory)
-					.RenderContent(() => new OrderHistory())
-					.Route("orderhistory")
-					.ID(IDs.OrderHistory)
+				ShellContent("Order History").FlyoutIcon(AIs.OrderHistory).RenderContent(() => new OrderHistory()).Route("orderhistory")
 			)
 			.FlyoutIsPresented(State.FlyoutIsPresented)
 			.FlyoutWidth(AppStyles.FlyoutMenuWidth)

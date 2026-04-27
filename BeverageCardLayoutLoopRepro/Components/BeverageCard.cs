@@ -8,35 +8,21 @@ public sealed partial class BeverageCard : Component
 {
 	public override VisualNode Render()
 	{
-		const string name = "Grey Goose";
-		const string maker = "Grey Goose";
-		const string style = "Wheat-Based";
-		const string abv = "40%";
-		string[] tags = ["smooth", "wheat", "citrus", "almond", "premium"];
-		const string size = "750ml";
-		const decimal price = 5000m;
-		const string imageUrl = "https://beerboxstaging.blob.core.windows.net/images/_mock%20Grey%20Goose.webp";
-		const string kindLabel = "Vodka";
-		const double globalRating = 3.9;
-		const long untappdBeverageId = 200004;
-
-		const string sep = "  •  ";
-
 		Console.WriteLine($"*** TRACE Render entry @ {DateTime.Now:HH:mm:ss.fff}");
 
 		return Grid(
 				"*,Auto",
 				"*",
-				RenderBeverageImage(imageUrl)
+				Border()
 					.GridRow(0)
-					.OnLoaded(() => Console.WriteLine($"*** LOADED image @ {DateTime.Now:HH:mm:ss.fff}"))
+					.OnLoaded(() => Console.WriteLine($"*** LOADED border @ {DateTime.Now:HH:mm:ss.fff}"))
 					.OnSizeChanged(
 						(sender, _) =>
 						{
 							if (sender is VisualElement v)
 							{
 								Console.WriteLine(
-									$"*** SIZECHG image {v.Width:G17}x{v.Height:G17} @ {DateTime.Now:HH:mm:ss.fff}"
+									$"*** SIZECHG border {v.Width:G17}x{v.Height:G17} @ {DateTime.Now:HH:mm:ss.fff}"
 								);
 							}
 						}
@@ -54,11 +40,11 @@ public sealed partial class BeverageCard : Component
 									"Y" => v.Y,
 									_ => double.NaN,
 								};
-								Console.WriteLine($"*** PROPCHG image {e.PropertyName}={val:G17}");
+								Console.WriteLine($"*** PROPCHG border {e.PropertyName}={val:G17}");
 							}
 						}
 					),
-				Border(Label(kindLabel).Margin(AppStyles.Spacing, AppStyles.Spacing / 2).VCenter().ThemeHeader())
+				Border(Label("label").Margin(AppStyles.Spacing, AppStyles.Spacing / 2).VCenter().ThemeHeader())
 					.ThemeSemiTransparent()
 					.HCenter()
 					.VEnd()
@@ -67,17 +53,17 @@ public sealed partial class BeverageCard : Component
 					.GridRow(0)
 					.InputTransparent(true),
 				VStack(
-						Label(name).ID(AutomationIds.Offer.BeverageName).ThemeBeverageName(),
-						Label(maker).ID(AutomationIds.Offer.Maker).ThemeMaker(),
+						Label("line 1").ThemeBeverageName(),
+						Label("line 2").ThemeMaker(),
 						FlexLayout(
-								Label($"{style}{sep}").LineBreakMode(LineBreakMode.TailTruncation),
-								Label($"ABV {abv}").LineBreakMode(LineBreakMode.NoWrap)
+								Label($"foo   •   bar").LineBreakMode(LineBreakMode.TailTruncation),
+								Label($"baz").LineBreakMode(LineBreakMode.NoWrap)
 							)
 							.Wrap(Microsoft.Maui.Layouts.FlexWrap.Wrap)
 							.AlignItems(Microsoft.Maui.Layouts.FlexAlignItems.Start),
-						Label(string.Join(sep, tags)),
-						Label($"size {size}{sep}price {price:¥#,0} (tax incl.)").HStart(),
-						RenderStarRating("community", globalRating, untappdBeverageId, AutomationIds.Offer.GlobalRating)
+						Label("line 3"),
+						Label("live 4"),
+						RenderStarRating("community", 3.4)
 					)
 					.Margin(AppStyles.MarginLR)
 					.InputTransparent(true)
@@ -127,27 +113,7 @@ public sealed partial class BeverageCard : Component
 			);
 	}
 
-	private static MauiReactor.Image RenderBeverageImage(string imageUrl) =>
-		Image()
-			.Source(
-				new UriImageSource
-				{
-					Uri = new Uri(imageUrl),
-					CacheValidity = TimeSpan.FromDays(28),
-					CachingEnabled = false,
-				}
-			)
-			.Aspect(Aspect.AspectFill)
-			.InputTransparent(true);
-
-	#region Star rating
-
-	private static MauiReactor.Grid RenderStarRating(
-		string label,
-		double rating,
-		long beverageId,
-		AutoId<MauiReactor.Label> ratingAutomationId
-	)
+	private static MauiReactor.Grid RenderStarRating(string label, double rating)
 	{
 		var starFile = $"rating_star_{Math.Round(rating * 4) * 0.25:0.00}".Replace(".", "_") + ".png";
 		const double starHeight = AppFonts.FontSizeMedium;
@@ -159,23 +125,10 @@ public sealed partial class BeverageCard : Component
 				Label(label).TextColor(AppStyles.StarRatingColor).LineBreakMode(LineBreakMode.NoWrap).GridColumn(0),
 				Image(starFile).Aspect(Aspect.Fill).HeightRequest(starHeight).WidthRequest(starWidth).GridColumn(1),
 				Label(rating.ToString("0.##", CultureInfo.InvariantCulture))
-					.ID(ratingAutomationId)
 					.TextColor(AppStyles.StarRatingColor)
 					.LineBreakMode(LineBreakMode.NoWrap)
 					.GridColumn(2)
 			)
-			.HStart()
-			.OnTapped(async () => await HandleUntappdRatingTapped(beverageId));
+			.HStart();
 	}
-
-	private static async Task HandleUntappdRatingTapped(long beverageId)
-	{
-		if (await Launcher.OpenAsync($"untappd://beer/{beverageId}"))
-		{
-			return;
-		}
-		_ = await Launcher.OpenAsync($"https://untappd.com/beer/{beverageId}");
-	}
-
-	#endregion Star rating
 }
