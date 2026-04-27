@@ -1,111 +1,184 @@
-# MAUI iOS — UriImageSource(CachingEnabled=false) + WordWrap labels triggers UIKit `layoutSubviews()` invalidation loop
+# MAUI iOS — UriImageSource(CachingEnabled=false) inside a `Grid("*,Auto", ...)` triggers a non-converging layout loop
 
-**Filed upstream:** [dotnet/maui#35142](https://github.com/dotnet/maui/issues/35142).
+**Filed upstream:** [dotnet/maui#35142](https://github.com/dotnet/maui/issues/35142) (issue body
+predates this analysis — needs an update with the findings below).
 
 ## Summary
 
-On iOS, when a MauiReactor `Image` uses `UriImageSource { CachingEnabled = false }`
-inside a layout that also contains `LineBreakMode.WordWrap` `Label`s on a narrow
-screen, the iOS image handler invalidates layout on every `layoutSubviews()` pass
-while the image is loading. Each pass re-sets `Image.Height` and `Image.Y` even
-when the values don't change, and MAUI's `VisualElement.UpdateBoundsComponents`
-fires `SizeChanged` even when the new frame equals the old one. The combination
-piles invalidations onto the UI thread faster than they can be drained, and the
-app becomes permanently stuck in a `-[UIView layoutSubviews]` recursion. No taps
-register, no further frames render.
+On iOS, when a MauiReactor `Image` uses `UriImageSource { CachingEnabled = false }` and is placed
+inside a 2-row `Grid` whose first row is `*` (the image) and second row is `Auto` (containing a
+sibling `VerticalStackLayout`), the iOS image handler invalidates layout on every
+`layoutSubviews()` pass while the image is loading. That alone wouldn't be fatal — but combined
+with ULP-level non-determinism in MAUI's measure pass, the layout settles into an **infinite
+oscillation between two near-identical heights** that never converges. The UI thread becomes
+permanently stuck. No taps register, no further frames render.
 
-Reproduces on **iPhone 16e** (375 pt screen width). The same project on
-**iPhone 17 Pro** (~440 pt) does not freeze — on the wider screen the WordWrap
-labels fit on fewer lines, so each layout pass is fast enough that
-invalidations drain before the next one is queued.
+Reproduces on **iPhone 16e** (375 pt screen width). Does **not** reproduce on
+**iPhone 17 Pro** (~440 pt). The repro path is `Launch → tap "show card" → freeze`.
 
-## Root cause vs. amplifier
+## Captured per-cycle log pattern (G17 precision)
 
-There are two pieces. Either one alone is harmless; both together freeze the
-UI thread.
+With the diagnostic instrumentation in
+[`Components/BeverageCard.cs`](BeverageCardLayoutLoopRepro/Components/BeverageCard.cs) that logs
+sizes at `G17` precision and captured under
+`xcrun simctl launch --console-pty jp.beercats.beerbox`, each freeze cycle (~1.5 ms apart, tens of
+thousands of cycles per second) produces this exact pattern:
 
-- **Root cause (the actual bug).** MAUI's iOS image handler invalidates layout
-  on every `layoutSubviews()` pass while a `UriImageSource` with
-  `CachingEnabled = false` is loading, not just when bytes arrive. The default
-  (`CachingEnabled = true`) masks this because the cached path resolves in one
-  shot. There also appears to be a missing equality check in
-  `VisualElement.UpdateBoundsComponents` — it fires `SizeChanged` even when the
-  frame is identical (see the trace below: `370.00000000 × 149.99999936`
-  repeats unchanged for hundreds of cycles).
+```text
+*** PROPCHG image Height=556.00000063578295
+*** SIZECHG image  390x556.00000063578295
+*** PROPCHG vstack Y=566.00000063578295
+*** PROPCHG vstack Height=149.99999936421713
+*** SIZECHG vstack 370x149.99999936421713
 
-- **Amplifier (in our app).** A `VerticalStackLayout` whose two
-  `LineBreakMode.WordWrap` children have *mixed* `HorizontalOptions` —
-  `HorizontalOptions.Fill` (default) for one label and `HorizontalOptions.Start`
-  for the other — is a slow layout pattern on iOS. Each pass takes long enough
-  on a narrow screen that overlapping invalidations stack up. Aligning both to
-  the same `HorizontalOptions` makes each pass fast enough that the
-  image-handler invalidation storm doesn't pile up.
+*** PROPCHG image Height=556.00000063578273
+*** SIZECHG image  390x556.00000063578273
+*** PROPCHG vstack Y=566.00000063578273
+*** PROPCHG vstack Height=149.99999936421725
+*** SIZECHG vstack 370x149.99999936421725
+```
+
+The two heights toggle indefinitely:
+
+| Element | Value A                | Value B                | ΔULP    |
+|---------|------------------------|------------------------|---------|
+| image   | `556.00000063578295`   | `556.00000063578273`   | ~22 ULP |
+| vstack  | `149.99999936421713`   | `149.99999936421725`   | ~12 ULP |
+| sums    | `706.00000000000008`   | `705.99999999999998`   | ~1 ULP  |
+
+Notice the sums: the total grid height is 750 pt; image + vstack + spacing always lands at ≈706.
+The two halves trade fractional bits with each other on every measure pass, but neither side ever
+settles. A single 26,033-line trace was captured during one freeze before the simulator was
+killed.
+
+## Root cause
+
+1. iOS image handler invalidates layout on every `-[UIView layoutSubviews]` pass while a
+   `UriImageSource` with `CachingEnabled = false` is loading. (With `CachingEnabled = true` —
+   the default — the cached path resolves in one shot and the loop never starts.)
+2. MAUI's measure pass produces ULP-level jitter in the `VerticalStackLayout`'s measured height
+   (`149.99999936421713` vs `149.99999936421725` here).
+3. The Grid `*` row computes the image's effective height as `total - vstackHeight - rowSpacing`.
+   The vstack's ULP jitter propagates straight into the image's height
+   (`556.00000063578295` vs `556.00000063578273`).
+4. Setting the image's `Height` fires `PropertyChanged`. Even though the new value is only ~22
+   ULP different from the old one, the equality check is bit-exact, so the change is observed.
+5. `PropertyChanged` invalidates layout. UIKit schedules another `layoutSubviews()`.
+6. Goto 2. Vstack now measures to the *other* of the two values (the layout subsystem appears to
+   alternate). Image height flips to the matching companion value. Repeat forever.
+
+The crucial property is that *neither side reaches a fixed point.* Each measure pass inputs
+`height_n` and outputs `height_{n+1}`; the function has a 2-cycle, not a fixed point.
+
+## What is *not* the cause
+
+- **`LineBreakMode.WordWrap` labels.** An earlier version of this README claimed the
+  `WordWrap` labels were a layout amplifier. They are not. **Removing every WordWrap modifier
+  from the labels does not stop the freeze.** On iPhone 16e the label text doesn't actually wrap
+  to a second line either, so wrapping was never happening to begin with.
+- **Mixed `HorizontalOptions` (`.Fill` vs `.HStart()`) on sibling labels.** Same — the freeze
+  reproduces with all labels at default `.Fill`.
+- **Pile-up of invalidations on the UI thread.** Earlier framing was wrong. The trace shows the
+  loop running at ~1.5 ms per cycle for as long as you let it. It's not that invalidations
+  arrive faster than they can be drained — it's that *each pass produces a different value than
+  the last*, so layout literally never converges.
+- **The Newtonsoft → STJ migration in our app.** The symptom is layout-thread, not
+  data-thread.
+- **MauiReactor 4.0.17.** Pinning back to 4.0.16 still reproduces.
+- **Per-render `new UriImageSource(...)` allocation.** MauiReactor's
+  [`CompareUtils.AreEquals`](https://github.com/adospace/reactorui-maui/blob/main/src/MauiReactor/Internals/CompareUtils.cs)
+  special-cases `UriImageSource` and compares by `Uri`, so allocating a fresh instance on every
+  render does **not** trigger a native re-fetch. Caching the instance does nothing.
+- **Render-side exceptions in `BeverageCard.Render()`.** `Render()` returns successfully every
+  cycle.
+
+## Why iPhone 17 Pro doesn't reproduce
+
+Unknown. The wider screen produces different ratios for image and vstack height; presumably the
+specific values that come out of the measure pass converge to a fixed point on the wider device
+where they fall into a 2-cycle on the narrower one. The bug is fundamentally a numerical
+non-determinism story, not a "narrow screen is too slow" story.
+
+## Workaround at the call site
+
+Switch the Grid rows from `"*,Auto"` to `"Auto,Auto"` and explicitly compute the image's
+`HeightRequest` from captured grid and vstack heights, gating the update with a tolerance much
+larger than ULP jitter (e.g. 0.5 px). The image height is then no longer derived from the
+vstack's per-measure height — it only updates when there's a real layout change. The full
+workaround as applied in the production app is in the beerbox repo's `BeverageCard.cs`; the
+short version is:
+
+```csharp
+var imageHeightRequest =
+    State.GridHeight is double gh && State.VStackHeight is double vh && gh > vh + AppStyles.Spacing
+        ? gh - vh - AppStyles.Spacing
+        : -1;
+
+return Grid("Auto,Auto", "*",
+    Image()...
+        .HeightRequest(imageHeightRequest)
+        .GridRow(0),
+    VStack(...)
+        .OnSizeChanged((s, _) => {
+            if (s is VisualElement v && Math.Abs((State.VStackHeight ?? -1) - v.Height) > 0.5)
+                SetState(st => st.VStackHeight = v.Height);
+        })
+        .GridRow(1)
+);
+```
+
+A separate, simpler workaround if your app can tolerate it: set `CachingEnabled = true` (the
+default). The cached image-load path doesn't trigger the per-pass layout invalidation, so the
+2-cycle never starts.
 
 ## The repro project
 
-`BeverageCardLayoutLoopRepro/` is a stripped-down MauiReactor app whose only
-reachable navigation path is:
+`BeverageCardLayoutLoopRepro/` is a stripped-down MauiReactor app whose only reachable navigation
+path is `Launch → Order History → tap "show card"`. That tap pushes a page that renders a single
+`BeverageCard` with all data (name, image URL, etc.) hardcoded as `const` literals. There is no
+data layer, no DI, no mock JSON — just the page and the card. The card includes
+`Console.WriteLine`-based instrumentation on grid/image/vstack so the per-cycle pattern is
+visible in `xcrun simctl launch --console-pty` output.
 
-```text
-Launch → Order History (landing) → tap "Show Grey Goose"
-```
-
-That tap pushes a page that renders a single `BeverageCard`, which wraps the
-problematic `Image` + WordWrap-`Label` combination. The freeze happens
-immediately on that page.
-
-## Prerequisites
+### Prerequisites
 
 - macOS host with the iOS workload installed
 - .NET 10 SDK (`global.json` pins `10.0.100` — adjust if you have a different patch)
-- iPhone 16e simulator booted (or any narrow-width iPhone simulator). The UUID
-  shown below is mine — use your own.
+- iPhone 16e simulator booted (or any narrow-width iPhone simulator). The UUID shown below is
+  mine — use your own.
 
-## Build
+### Build
 
 ```bash
 dotnet build BeverageCardLayoutLoopRepro/BeverageCardLayoutLoopRepro.csproj \
   -c Debug -f net10.0-ios
 ```
 
-There is no real backend in this branch; the repro renders one hardcoded
-beverage card with no data layer at all — no `DataManager`, no DI registrations,
-no mock JSON. Everything the card displays is a `const` literal inside
-`BeverageCard.cs`.
-
-## Deploy and run
+### Deploy and run
 
 ```bash
 DEVICE=$(xcrun simctl list devices | awk '/iPhone 16e.*Booted/ {gsub(/[()]/,"",$NF); print $NF; exit}')
 xcrun simctl terminate "$DEVICE" jp.beercats.beerbox 2>/dev/null
 xcrun simctl install "$DEVICE" \
   BeverageCardLayoutLoopRepro/bin/Debug/net10.0-ios/iossimulator-arm64/beerbox.app
-xcrun simctl launch "$DEVICE" jp.beercats.beerbox
+xcrun simctl launch --console-pty "$DEVICE" jp.beercats.beerbox
 ```
 
-## Reproduction steps
+Pipe to a file (`>/tmp/repro-trace.log 2>&1 &`) if you want to inspect the trace at leisure;
+the freeze produces ~26,000 lines per second.
 
-1. Launch the app. It lands on **Order History** (the only Shell tab — a single button).
-2. Tap **Show Grey Goose**.
-3. The `BeverageCard` for Grey Goose begins rendering and the app freezes within
-   ~1 second. Taps no longer register; no further frames render. The UI thread
-   never becomes responsive again.
+### Reproduction steps
 
-### Expected
-
-The `BeverageCard` finishes rendering, the image loads, and the page is responsive.
-
-### Actual
-
-The UI thread is stuck recursing through `-[UIView layoutSubviews]` because the
-image handler's per-pass layout invalidations are amplified by the two
-`LineBreakMode.WordWrap` labels (the tags label with `HorizontalOptions.Fill`
-and the size+price label with `HorizontalOptions.Start`) wrapping to two lines
-each on a 375 pt screen.
+1. Launch the app. It lands on **Order History** (one Shell tab — a single button).
+2. Tap **show card**.
+3. The `BeverageCard` for Grey Goose begins rendering and the app freezes within ~1 second. Taps
+   no longer register; no further frames render. The UI thread never becomes responsive again.
+4. The console-pty stream shows the alternating-values pattern above, repeating until the
+   simulator is killed.
 
 ## Trigger line
 
-The exact code that triggers the cascade is in
+The `UriImageSource` in
 [`BeverageCardLayoutLoopRepro/Components/BeverageCard.cs`](BeverageCardLayoutLoopRepro/Components/BeverageCard.cs):
 
 ```csharp
@@ -116,118 +189,28 @@ private static MauiReactor.Image RenderBeverageImage(string imageUrl) =>
             {
                 Uri = new Uri(imageUrl),
                 CacheValidity = TimeSpan.FromDays(28),
-                CachingEnabled = false,   // ← the trigger
+                CachingEnabled = false,   // ← required for the freeze
             }
         )
         .Aspect(Aspect.AspectFill)
         .InputTransparent(true);
 ```
 
-Either of these workarounds, applied alone, makes the freeze go away on
-iPhone 16e:
-
-- Set `CachingEnabled = true` (or omit it — `true` is the default).
-- Drop the `.HStart()` from the size/price label so both `WordWrap` labels
-  share `HorizontalOptions.Fill`. Layout converges in one pass and the
-  image-handler invalidation storm doesn't pile up. **This is the recommended
-  product-side workaround** while waiting for the upstream MAUI fix — it
-  doesn't require giving up cache-bypass for cases where it's needed.
-
-## Captured per-cycle log pattern
-
-When attached to the simulator with `xcrun simctl launch --console-pty` and
-the diagnostic instrumentation referenced below, each freeze cycle produces
-this exact sequence:
-
-```text
-*** PROPCHG image Height
-*** SIZECHG image 390.0x556.0
-*** PROPCHG image Y
-*** PROPCHG image Height
-*** SIZECHG vstack 370.00000000x149.99999936
-```
-
-The VStack frame `370.00000000 × 149.99999936` is **stable across iterations**
-— it repeats unchanged for hundreds of cycles. This is *not* measurement
-oscillation. It's `VisualElement.UpdateBoundsComponents` firing `SizeChanged`
-on every `Frame` set even when the new frame equals the old one, combined with
-the image handler re-setting `Image.Height` / `Image.Y` on every
-`layoutSubviews()` pass.
-
-## Captured stack at the breakpoint
-
-Setting a breakpoint inside the `OnSizeChanged` handler captures this stack
-on every cycle:
-
-```
-MauiReactor.SyncEventCommand<EventArgs>.Execute()
-MauiReactor.VisualElement<VerticalStackLayout>.NativeControl_SizeChanged
-Microsoft.Maui.Controls.VisualElement.UpdateBoundsComponents()
-Microsoft.Maui.Controls.VisualElement.Frame.set()
-Microsoft.Maui.Controls.VisualElement.ArrangeOverride()
-Microsoft.Maui.Controls.VisualElement.IView.Arrange()
-Microsoft.Maui.Layouts.GridLayoutManager.ArrangeChildren()
-Microsoft.Maui.Platform.MauiView.LayoutSubviews()      ← UIKit -[UIView layoutSubviews]
-... UIKit ...
-```
-
-The driver of the loop is in native UIKit code, so a "pause from the
-toolbar" while the app is frozen typically lands at a quiet moment and shows
-only `Program.Main`. A breakpoint inside `OnSizeChanged` is what captures the
-recursion path — see "Reproducing the trace yourself" below.
-
-## Ruled out (so you don't have to)
-
-These were investigated and confirmed *not* to be the cause:
-
-- **The Newtonsoft → STJ migration in our app.** The symptom is a layout-thread
-  freeze, not a data-thread one.
-- **MauiReactor 4.0.17.** Pinning back to 4.0.16 still reproduces. The plausible
-  4.0.17 suspect was [PR #369 ("Fix SetState/Invalidate during layout cycle
-  silently losing invalidation")](https://github.com/adospace/reactorui-maui/pull/369);
-  it isn't the cause.
-- **Per-render `new UriImageSource(...)` allocation.** MauiReactor's
-  [`CompareUtils.AreEquals`](https://github.com/adospace/reactorui-maui/blob/main/src/MauiReactor/Internals/CompareUtils.cs)
-  special-cases `UriImageSource` and compares by `Uri`, so allocating a fresh
-  `UriImageSource` on every render does **not** trigger a native re-fetch.
-  Caching the instance does nothing.
-- **Render-side exceptions in `BeverageCard.Render()`.** Interactive debugging
-  confirmed `Render()` returns successfully every cycle. (MauiReactor does
-  silently swallow exceptions in `Component.Render`/`OnMounted`/`OnWillUnmount`
-  — but that's not what's happening here.)
+…combined with the parent `Grid("*,Auto", "*", ...)` containing the image (in the `*` row) and
+the `VStack` (in the `Auto` row).
 
 ## Bottom-up minimal repros that *failed* to reproduce
 
-Two from-scratch projects mirroring the layout 1:1 were tried before stripping
-down the real app:
+Two from-scratch projects mirroring the layout 1:1 were tried before stripping down the real
+app:
 
 - `BeverageCardFreezeRepro` — XAML
 - `BeverageCardFreezeReproReactor` — MauiReactor
 
-Neither freezes on iPhone 16e. Empirically, removing any of the following from
-this stripped repro also makes the freeze go away — they appear to be part of
-the trigger surface:
-
-- `Shell` + flyout
-- The `Pages/Base.cs` `ContentPage` wrapper (with the safe-area edges set)
-- The `Platforms/iOS/Handlers/` shims (status bar, shell, picker, refresh, etc.)
-
-That guidance is what informed which pieces to keep when stripping the app
-down to this repro.
-
-## Reproducing the trace yourself
-
-To produce the trace shown above, instrument the inner `VStack` and `Image`
-in [`Components/BeverageCard.cs`][bc] with `.OnSizeChanged(...)` /
-`.OnPropertyChanged(...)` handlers that `Debug.WriteLine` the new value, then
-re-run with `xcrun simctl launch --console-pty`. The repro project itself
-ships *without* the diagnostic instrumentation so the trigger surface is as
-small as possible.
-
-To capture the stack: in your `launch.json` set `"justMyCode": false` so MAUI
-and MauiReactor frames aren't collapsed into `[External Code]`, set a
-breakpoint inside the inline `.OnSizeChanged` handler, and let the loop hit
-it. Pausing from the toolbar instead won't work — UIKit drives the loop and
-the pause typically lands at a quiet moment.
-
-[bc]: BeverageCardLayoutLoopRepro/Components/BeverageCard.cs
+Neither freezes on iPhone 16e. Empirically, removing the `Shell` + flyout or the `Base.cs`
+`ContentPage` wrapper from this stripped repro also makes the freeze go away — they appear to be
+part of the trigger surface in some way that bottom-up minimal projects don't reproduce. (Why is
+unclear; the surrounding container presumably affects the exact layout dimensions enough to push
+the measure pass into the 2-cycle.) Earlier passes also kept the `Platforms/iOS/Handlers/`
+shims for the same reason; a later pass deleted them and the freeze still reproduces, so they're
+not actually load-bearing.
