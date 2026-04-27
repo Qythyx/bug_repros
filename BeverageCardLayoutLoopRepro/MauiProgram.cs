@@ -35,13 +35,6 @@ public static class MauiProgram
 		Microsoft.Extensions.Logging.DebugLoggerFactoryExtensions.AddDebug(builder.Logging);
 #endif
 
-		Platforms.iOS.Handlers.ShellHandlerExtensions.Register(builder);
-		Platforms.iOS.Handlers.DatePickerHandlerExtensions.Register();
-		Platforms.iOS.Handlers.EditorHandlerExtensions.Register();
-		Platforms.iOS.Handlers.EntryHandlerExtensions.Register();
-		Platforms.iOS.Handlers.PickerHandlerExtensions.Register();
-		Platforms.iOS.Handlers.RefreshViewHandlerExtensions.Register();
-
 		return builder.Build();
 	}
 }

@@ -44,17 +44,6 @@
 		<PackageReference Include="Reactor.Maui.HotReload" />
 	</ItemGroup>
 	<ItemGroup>
-		<EmbeddedResource Update="Resources\Localization\AppResources.resx">
-			<Generator>ResXFileCodeGenerator</Generator>
-			<LastGenOutput>AppResources.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-		<Compile Update="Resources\Localization\AppResources.Designer.cs">
-			<AutoGen>true</AutoGen>
-			<DesignTime>true</DesignTime>
-			<DependentUpon>AppResources.resx</DependentUpon>
-		</Compile>
-	</ItemGroup>
-	<ItemGroup>
 		<ITunesArtwork Include="Platforms\iOS\iTunesArtwork" />
 		<ITunesArtwork Include="Platforms\iOS\iTunesArtwork%402x" />
 	</ItemGroup>

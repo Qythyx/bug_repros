@@ -55,47 +55,14 @@ internal static class AppColors
 	/// <summary>Mid.</summary>
 	internal static readonly ThemePair<Color> Mid = new(Color.FromArgb("#939598"), Color.FromArgb("#939598"));
 
-	/// <summary>FAB Text.</summary>
-	internal static readonly ThemePair<Color> FABText = new(Colors.White, Colors.White);
-
 	/// <summary>Control Area.</summary>
 	internal static readonly ThemePair<Color> ControlArea = new(Color.FromArgb("#EEEEEE"), Color.FromArgb("#2B2B2B"));
-
-	/// <summary>Control Selected.</summary>
-	internal static readonly ThemePair<Color> ControlSelected = new(
-		Color.FromArgb("#999999"),
-		Color.FromArgb("#888888")
-	);
-
-	/// <summary>Valid Input (checkmark green).</summary>
-	internal static readonly Color ValidInput = Color.FromArgb("#44DD00");
 
 	/// <summary>Star Rating (gold).</summary>
 	internal static readonly Color StarRating = Color.FromArgb("#FFC000");
 
 	#region Brushes
 
-	internal static readonly Brush Gradient1 = new LinearGradientBrush(
-		[
-			new(Color.FromArgb("#86D3EF"), 0f),
-			new(Color.FromArgb("#F1EAA7"), 0.2f),
-			new(Color.FromArgb("#F1EAA7"), 0.5f),
-			new(Color.FromArgb("#85D2EE"), 1f),
-		],
-		new Point(0.5, 0),
-		new Point(0.5, 1)
-	);
-
-	internal static readonly Brush Gradient2 = new LinearGradientBrush(
-		[
-			new(Colors.Transparent, 0f),
-			new(Color.FromArgb("#AAE38BA6"), 0.5f),
-			new(Color.FromArgb("#AAE38BA6"), 0.8f),
-			new(Colors.Transparent, 1f),
-		],
-		new Point(0.2, 0.2),
-		new Point(0.8, 1)
-	);
 
 	internal static readonly ThemePair<Brush> Shadow = new(
 		new SolidColorBrush(Color.FromArgb("#77000000")),

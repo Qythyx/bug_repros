@@ -1,7 +1,6 @@
 using Beerbox.App.Theming;
 using MauiReactor;
 using AIs = Beerbox.App.Theming.AppImages.Icons;
-using ARs = Beerbox.App.Resources.Localization.AppResources;
 using IDs = Beerbox.App.AutomationIds.Shell;
 using MauiControls = Microsoft.Maui.Controls;
 
@@ -34,7 +33,7 @@ public sealed class MainShell : Component<MainShell.MyState>
 		IPlatformApplication.Current?.Services.GetService<IStatusBarStyleManager>()?.SetColor(AppColors.ControlArea.Resolve);
 
 		return Shell(
-				ShellContent(ARs.OrderHistoryTitle)
+				ShellContent("Order History")
 					.FlyoutIcon(AIs.OrderHistory)
 					.RenderContent(() => new OrderHistory())
 					.Route("orderhistory")

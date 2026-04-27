@@ -1,4 +1,3 @@
-using Beerbox.App.Resources.Localization;
 using MauiReactor;
 using MauiControls = Microsoft.Maui.Controls;
 
@@ -8,7 +7,7 @@ public sealed class OrderHistory : Base<OrderHistory.MyState>
 {
 	public sealed class MyState;
 
-	protected override string PageTitle => AppResources.OrderHistoryTitle;
+	protected override string PageTitle => "Order History";
 
 	protected override VisualNode RenderContent() => Button("show card").OnClicked(HandleShowCard).VCenter().HCenter();
 
