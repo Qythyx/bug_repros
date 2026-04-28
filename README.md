@@ -1,7 +1,12 @@
 # MAUI iOS — `Grid("*,Auto")` over a `VerticalStackLayout` enters a non-converging measurement 2-cycle on iPhone 16e
 
-**Filed upstream:** [dotnet/maui#35142](https://github.com/dotnet/maui/issues/35142) (issue body
-predates this analysis — needs an update with the findings below).
+**Filed upstream:** [dotnet/maui#35142](https://github.com/dotnet/maui/issues/35142) — **fixed in
+MAUI 10.0.51** by [dotnet/maui#34024](https://github.com/dotnet/maui/pull/34024) ("[iOS] Fix
+SafeArea infinite layout cycle with parent hierarchy walk and pixel-level comparison"). See
+**Resolution** at the bottom of this file. The original analysis below identified the wrong layer:
+the trace's PropertyChanged storm in Grid/VStack is the symptom; the actual trigger is iOS
+`SafeAreaInsetsDidChange` firing on sub-pixel inset changes, which the old `MauiView` code compared
+with bit-exact equality.
 
 ## Summary
 
@@ -135,3 +140,40 @@ that when it freezes it produces many lines per second.
    further frames render. The UI thread never becomes responsive again.
 4. The console-pty stream shows the alternating-values pattern above, repeating until the simulator
    is killed.
+
+## Resolution
+
+Verified fixed by upgrading `Microsoft.Maui.Controls` from `10.0.41` to `10.0.51`. The relevant
+upstream change is [dotnet/maui#34024](https://github.com/dotnet/maui/pull/34024) (commit
+`6c123d7297`), the only iOS layout-related commit between the two release tags.
+
+Two changes from that PR are responsible:
+
+1. **`SafeAreaPadding.EqualsAtPixelLevel`** ([`src/Core/src/Platform/iOS/SafeAreaPadding.cs`](https://github.com/dotnet/maui/blob/10.0.51/src/Core/src/Platform/iOS/SafeAreaPadding.cs)).
+   `MauiView.ValidateSafeArea` previously compared `oldSafeArea == _safeArea` bit-exactly. A 1-ULP
+   delta in any inset triggered `InvalidateAncestorsMeasures()` and another layout pass. The new
+   call site uses `EqualsAtPixelLevel`, which rounds each inset to device-pixel resolution
+   (`Math.Round(value * UIScreen.MainScreen.Scale)`) before comparing. Sub-pixel jitter that maps to
+   the same physical pixel is now treated as equal, so the cycle terminates. This directly explains
+   the 12–22 ULP oscillations we captured (≈10⁻¹³ pt, vastly below 0.333 pt at @3x).
+
+2. **`MauiView.IsParentHandlingSafeArea`** (parent-hierarchy walk in
+   [`src/Core/src/Platform/iOS/MauiView.cs`](https://github.com/dotnet/maui/blob/10.0.51/src/Core/src/Platform/iOS/MauiView.cs)).
+   `_appliesSafeAreaAdjustments` now also requires `!IsParentHandlingSafeArea()`, preventing a
+   `ContentPage` and a child `Grid` from both adjusting for the same edges and ping-ponging each
+   other's positions on notched devices.
+
+### Why the original "VStack measure non-determinism" framing was wrong
+
+The PropertyChanged trace shows heights changing inside Grid/VStack, so the analysis blamed
+`gridHeight - vstackHeight - rowSpacing` propagation. That is downstream. The trigger is UIKit-side:
+on the iPhone 16e the notch geometry produces non-zero safe-area insets, and as MAUI repositions
+content during measurement iOS reports tiny sub-pixel changes. The old exact-equality check treated
+those as real changes and re-invalidated ancestors. The 17 Pro doesn't reproduce because its
+geometry happens to land cleanly — same code path, different sub-pixel rounding.
+
+### Note on the upstream link
+
+PR #34024's "Fixes" list does not include #35142 — it predates the report. The maintainer who
+responded inferred the connection. Given .51 stops the repro and #34024 is the only iOS layout
+change in the diff, the inference is correct.
